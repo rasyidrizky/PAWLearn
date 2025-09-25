@@ -1,0 +1,235 @@
+/* General Setup */
+:root {
+    --bg-color: #f3e9d2;
+    --fence-color: #c6a49a;
+    --text-color: #3a3a3a;
+    --outline-color: #000000;
+    --card-bg-color: #ffffff;
+    --progress-bar-color: #9d5c5c;
+    --logo-font: 'Fredoka One', cursive;
+    --body-font: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    padding: 20px 5%;
+    width: 100%;
+    z-index: 100;
+    background-color: #896C6C;
+    box-shadow: 0 7px black;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.logo { 
+    font-family: var(--logo-font); 
+    font-size: 2rem; 
+}
+.paw { 
+    position: relative; 
+    display: inline-block; 
+    color: transparent; 
+    width: 25px; 
+    height: 1.2em; 
+    vertical-align: middle; 
+}
+.paw::before { 
+    content: ''; 
+    position: absolute; 
+    width: 60%; 
+    height: 50%; 
+    background-color: var(--text-color); 
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%; 
+    bottom: 15%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+}
+.paw::after { 
+    content: ''; 
+    position: absolute; 
+    width: 24%; 
+    height: 24%; 
+    background-color: var(--text-color); 
+    border-radius: 50%; 
+    top: 15%; 
+    left: 5%; 
+    box-shadow: 140% -5%, 0 0 var(--text-color), 280% 5%, 0 0 var(--text-color); 
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+nav ul li a {
+    font-size: 25px;
+    -webkit-text-stroke: 1px black;
+    text-decoration: none;
+    color: #FBF9D1;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+nav ul li a:hover {
+    color: #7b5e48;
+}
+
+/* Fence */
+.fence-strip-topbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-topbar 3s ease-in-out infinite;
+}
+.fence-strip-downbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-downbar 3s ease-in-out infinite;
+}
+.fence-post {
+    width: 60px;
+    height: 100%;
+    border-right: 3px solid var(--outline-color);
+    flex-shrink: 0;
+}
+
+.fence .fence-post {
+    background-color: #C1856D;
+}
+
+@keyframes wiggle-topbar {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-50px);
+  }
+}
+@keyframes wiggle-downbar {
+  0%, 100% {
+    transform: translateX(-50px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+}
+
+/* Main Content */
+.discover-page-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 20px;
+}
+
+/* Left Column */
+.fact-container {
+    text-align: left;
+    width: 25%;
+}
+.fact-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.fact-box {
+    background-color: var(--card-bg-color);
+    border: 3px solid var(--outline-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 1);
+}
+.fact-box h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+/* Center Column */
+.clicker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.dog-clicker {
+    width: 100%;
+    max-width: 250px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+.dog-clicker:hover {
+    transform: scale(1.05);
+}
+.dog-clicker:active {
+    transform: scale(0.95); 
+}
+.total-clicks {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+.clicks-per-second {
+    font-size: 1rem;
+    margin-top: 5px;
+    color: #555;
+}
+
+/* Right Column */
+.progress {
+    height: 80px;
+    color: var(--progress-bar-color);
+}
+.progress-container {
+    width: 25%;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    color: #FBF9D1;
+    background-color: #896C6C;
+    box-shadow: 0 -7px black;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .discover-page-main {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .fact-container, .progress-container {
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+    }
+}

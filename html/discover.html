@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/study.css">
+    <link rel="stylesheet" href="../css/discover.css">
     <link rel="icon" type="image/x-icon" href="../images/Logo (Regular).svg">
 </head>
 <body>
@@ -37,35 +37,27 @@
         <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
     </div>
 
-    <main class="discover-main">
-        <img src="../images/World.svg" alt="Stylized world map" class="world-map-background">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-1">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-2">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-3">
+    <main class="discover-page-main">
+        <div class="fact-container">
+            <h2>Recent Fact:</h2>
+            <div class="fact-box">
+                <h3>Random Fact #<span id="fact-id">0</span></h3>
+                <p id="fact-text">
+                    Click the dog on the middle to unlock a fact.
+                </p>
+            </div>
+        </div>
 
-        <div class="chapter-card chapter-1">
-            <h2>Chapter 1</h2>
-            <p>Introduction</p>
+        <div class="clicker-container">
+            <img src="../images/Logo (Regular).png" alt="A pug face to click" class="dog-clicker" onclick="addClick()">
+            <h1 class="total-clicks">Total Clicks: <span id="no_of_click">0</span></h1>
+            <p class="clicks-per-second">Click per second: <span id="click_per_second">0</span></p>
         </div>
-        <div class="chapter-card chapter-2">
-            <h2>Chapter 2</h2>
-            <p>Introduction</p>
-        </div>
-        <div class="chapter-card chapter-3">
-            <h2>Chapter 3</h2>
-            <p>Introduction</p>
-        </div>
-        <div class="chapter-card chapter-4">
-            <h2>Chapter 4</h2>
-            <p>Introduction</p>
-        </div>
-        <div class="chapter-card chapter-5">
-            <h2>Chapter 5</h2>
-            <p>Introduction</p>
-        </div>
-        <div class="chapter-card chapter-quiz">
-            <h2>Quiz</h2>
-            <p>Test your skill</p>
+
+        <div class="progress-container">
+            <h2>Next Fact:</h2>
+            <p class="clicks-to-next"><span id="click_goal">100</span> Clicks</p>
+            <progress id="goal_percentage" class="progress" value="0" max="100"></progress>
         </div>
     </main>
 
@@ -85,6 +77,6 @@
         <p>Made by rasyidrizky</p>
     </footer>
 
-    <script src="../js/study.js"></script>
+    <script src="../js/discover.js"></script>
 </body>
 </html>
