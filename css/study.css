@@ -1,14 +1,16 @@
-/* --- 1. General Setup --- */
+/* General */
 :root {
-    --bg-color: #f3e9d2; /* Light beige for background */
-    --fence-color: #c6a49a; /* Brown for fences */
-    --button-bg-color: #8b7166; /* Brown for button/card top */
-    --text-color: #3a3a3a; /* Dark text */
-    --outline-color: #000000; /* Black for all outlines */
-    --card-bg-color: #ffffff; /* White for card body */
+    --bg-color: #f3e9d2;
+    --button-bg-color: #8b7166;
+    --text-color: #3a3a3a;
+    --outline-color: #000000;
+    --card-bg-color: #ffffff;
 
     --logo-font: 'Fredoka One', cursive;
     --body-font: 'Poppins', sans-serif;
+
+    --top-bar-color: #d3bfae;
+    --bottom-bar-color: #9d8378;
 }
 
 * {
@@ -24,11 +26,11 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+    overflow-x: hidden;
     position: relative;
 }
 
-/* --- 2. Header & Navigation (Unchanged from previous page) --- */
+/* Header */
 header {
     padding: 20px 5%;
     width: 100%;
@@ -49,7 +51,7 @@ nav {
     position: relative;
 }
 .logo { font-size: 2rem; }
-.logo-main { font-size: 3.5rem; } /* Not used on this page, but kept for consistency */
+.logo-main { font-size: 3.5rem; }
 .paw {
     position: relative;
     display: inline-block;
@@ -83,81 +85,98 @@ nav ul {
     gap: 40px;
 }
 nav ul li a {
+    font-size: 25px;
+    -webkit-text-stroke: 1px black;
     text-decoration: none;
-    color: var(--text-color);
+    color: #FBF9D1;
     font-weight: bold;
     padding: 5px 10px;
     transition: color 0.3s;
 }
 nav ul li a:hover {
-    color: var(--button-bg-color); /* Adjusted hover color */
+    color: #7b5e48;
 }
-
-
-/* --- 3. Fence Strip Animations --- */
-.fence-strip {
-    height: 60px; /* Height of the fence strip */
-    background-color: var(--fence-color);
+.border-bar {
+    width: 100%;
+    height: 40px;
     border-top: 3px solid var(--outline-color);
     border-bottom: 3px solid var(--outline-color);
-    display: flex; /* Use flexbox for fence posts */
-    overflow: hidden; /* Hide posts outside the strip */
-    position: relative;
-    z-index: 50; /* Ensure fences are above map/clouds but below header/footer */
+    z-index: 50;
+}
+.top-bar {
+    background-color: var(--top-bar-color);
 }
 
+.bottom-bar {
+    background-color: var(--bottom-bar-color);
+}
+
+/* Fence Strip Animations */
+.fence-strip-topbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-topbar 3s ease-in-out infinite;
+}
+.fence-strip-downbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-downbar 3s ease-in-out infinite;
+}
 .fence-post {
-    width: 50px; /* Width of each post */
-    height: 100%; /* Posts fill the height */
-    border-left: 3px solid var(--outline-color);
+    width: 60px;
+    height: 100%;
     border-right: 3px solid var(--outline-color);
-    flex-shrink: 0; /* Prevent posts from shrinking */
+    flex-shrink: 0;
 }
 
-/* For continuous animation, we need to duplicate the fence content.
-   This can be done by making the fence-strip much wider than the viewport,
-   or by using JavaScript to clone elements, or purely with CSS.
-   For simplicity and vanilla CSS, we'll animate a larger container.
-   The fence-posts are inside the fence-strip, which will have a very wide
-   virtual width, and then that entire strip will be translated.
-*/
-.fence-top {
-    animation: moveFenceLeft 20s linear infinite;
-}
-.fence-bottom {
-    animation: moveFenceRight 20s linear infinite;
+.fence .fence-post {
+    background-color: #C1856D;
 }
 
-/* These animations translate the entire fence strip (which is very wide) */
-@keyframes moveFenceLeft {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); } /* Move half its duplicated width */
+@keyframes wiggle-topbar {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-50px);
+  }
 }
-@keyframes moveFenceRight {
-    from { transform: translateX(-50%); } /* Start halfway */
-    to { transform: translateX(0); } /* Move back to start */
+@keyframes wiggle-downbar {
+  0%, 100% {
+    transform: translateX(-50px);
+  }
+  50% {
+    transform: translateX(0);
+  }
 }
 
-
-/* --- 4. Main Content - Discovery Page --- */
+/* Main Content*/
 .discover-main {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden; /* Hide cloud overflow */
-    padding: 50px 0; /* Add some vertical padding */
+    overflow: hidden;
+    padding: 50px 0;
 }
 
 .world-map-background {
     position: absolute;
-    width: 90%; /* Occupy most of the width */
+    width: 90%;
     height: auto;
-    max-width: 1200px; /* Max size for map */
-    opacity: 0.8; /* Make it slightly faded */
-    z-index: 1; /* Below cards */
-    pointer-events: none; /* Make it non-interactive */
+    max-width: 1200px;
+    opacity: 0.8;
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Cloud animations */
@@ -192,14 +211,14 @@ nav ul li a:hover {
 @keyframes moveCloud {
     0% {
         transform: translateX(calc(100vw + 200px));
-        opacity: 0; /* <-- ADDED: Start invisible */
+        opacity: 0;
     }
     10%, 90% {
-        opacity: 1; /* <-- ADDED: Fade in and stay visible */
+        opacity: 1;
     }
     100% {
         transform: translateX(calc(-100% - 200px));
-        opacity: 0; /* <-- ADDED: Fade out */
+        opacity: 0;
     }
 }
 
@@ -211,11 +230,11 @@ nav ul li a:hover {
     padding: 20px 30px;
     text-align: center;
     box-shadow: 6px 6px 0 var(--outline-color);
-    position: absolute; /* Absolute positioning for layout */
-    z-index: 10; /* Above map and clouds */
+    position: absolute;
+    z-index: 10;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    min-width: 200px; /* Ensure a minimum width */
+    min-width: 200px;
 }
 
 .chapter-card:hover {
@@ -231,7 +250,7 @@ nav ul li a:hover {
     border: 3px solid var(--outline-color);
     border-radius: 10px;
     padding: 8px 15px;
-    margin-top: -30px; /* Pull it up to overlap border */
+    margin-top: -30px;
     position: relative;
     display: inline-block;
     z-index: 1;
@@ -244,16 +263,15 @@ nav ul li a:hover {
     color: var(--text-color);
 }
 
-/* Positioning for each card - adjust these values as needed to match your image */
+/* Positioning for each card */
 .chapter-1 { top: 15%; left: 10%; }
-.chapter-2 { top: 15%; left: 35%; }
+.chapter-2 { top: 15%; left: 42%; }
 .chapter-3 { top: 15%; right: 10%; }
 .chapter-4 { bottom: 15%; right: 10%; }
-.chapter-5 { bottom: 15%; left: 35%; }
-.chapter-quiz { bottom: 15%; left: 10%; }
+.chapter-5 { bottom: 15%; left: 42%; }
+.chapter-quiz { bottom: 15%; left: 11%; }
 
-
-/* --- 5. Footer (Unchanged from previous page) --- */
+/* Footer */
 footer {
     width: 100%;
     text-align: center;
@@ -266,7 +284,7 @@ footer {
     -webkit-text-stroke: 1px black;
 }
 
-/* --- 6. Responsive Design --- */
+/* Responsive Design */
 @media (max-width: 1200px) {
     .chapter-card {
         padding: 15px 20px;
@@ -287,13 +305,13 @@ footer {
     nav ul { gap: 20px; }
 
     .discover-main {
-        flex-direction: column; /* Stack cards vertically on smaller screens */
+        flex-direction: column;
         padding: 20px 0;
-        gap: 30px; /* Space between stacked cards */
+        gap: 30px;
         height: auto;
     }
     .world-map-background {
-        width: 100%; /* Scale map to be larger to fill more space when cards stack */
+        width: 100%;
         opacity: 0.3;
         top: 50%;
         left: 50%;
@@ -301,15 +319,15 @@ footer {
     }
     .cloud {
         width: 100px;
-        animation-duration: 20s !important; /* Speed up clouds */
+        animation-duration: 20s !important;
     }
 
     .chapter-card {
-        position: static; /* Remove absolute positioning for stacking */
-        width: 80%; /* Make cards take more width */
+        position: static;
+        width: 80%;
         max-width: 300px;
-        margin: 0 auto; /* Center cards */
-        transform: none !important; /* Override potential animations */
+        margin: 0 auto;
+        transform: none !important;
         box-shadow: 4px 4px 0 var(--outline-color);
     }
     .chapter-card:hover { transform: none; box-shadow: 6px 6px 0 var(--outline-color); }
@@ -320,8 +338,6 @@ footer {
     header { padding: 15px 2%; }
     nav ul { gap: 10px; font-size: 1rem; }
     .logo { font-size: 1.8rem; }
-    .fence-strip { height: 40px; }
-    .fence-post { width: 30px; }
     .discover-main { padding: 10px 0; }
     .chapter-card { width: 90%; }
     footer { padding: 10px; }
