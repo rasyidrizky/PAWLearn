@@ -1,0 +1,328 @@
+/* --- 1. General Setup --- */
+:root {
+    --bg-color: #f3e9d2; /* Light beige for background */
+    --fence-color: #c6a49a; /* Brown for fences */
+    --button-bg-color: #8b7166; /* Brown for button/card top */
+    --text-color: #3a3a3a; /* Dark text */
+    --outline-color: #000000; /* Black for all outlines */
+    --card-bg-color: #ffffff; /* White for card body */
+
+    --logo-font: 'Fredoka One', cursive;
+    --body-font: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+    position: relative;
+}
+
+/* --- 2. Header & Navigation (Unchanged from previous page) --- */
+header {
+    padding: 20px 5%;
+    width: 100%;
+    z-index: 100;
+    background-color: #896C6C;
+    box-shadow: 0 7px black;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.logo, .logo-main {
+    font-family: var(--logo-font);
+    font-weight: bold;
+    color: var(--text-color);
+    position: relative;
+}
+.logo { font-size: 2rem; }
+.logo-main { font-size: 3.5rem; } /* Not used on this page, but kept for consistency */
+.paw {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    width: 25px;
+    height: 1.2em;
+    vertical-align: middle;
+}
+.logo-main .paw { width: 35px; }
+.paw::before {
+    content: '';
+    position: absolute;
+    width: 60%; height: 50%;
+    background-color: var(--text-color);
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+    bottom: 15%; left: 50%;
+    transform: translateX(-50%);
+}
+.paw::after {
+    content: '';
+    position: absolute;
+    width: 24%; height: 24%;
+    background-color: var(--text-color);
+    border-radius: 50%;
+    top: 15%; left: 5%;
+    box-shadow: 140% -5%, 0 0 var(--text-color), 280% 5%, 0 0 var(--text-color);
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+nav ul li a:hover {
+    color: var(--button-bg-color); /* Adjusted hover color */
+}
+
+
+/* --- 3. Fence Strip Animations --- */
+.fence-strip {
+    height: 60px; /* Height of the fence strip */
+    background-color: var(--fence-color);
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex; /* Use flexbox for fence posts */
+    overflow: hidden; /* Hide posts outside the strip */
+    position: relative;
+    z-index: 50; /* Ensure fences are above map/clouds but below header/footer */
+}
+
+.fence-post {
+    width: 50px; /* Width of each post */
+    height: 100%; /* Posts fill the height */
+    border-left: 3px solid var(--outline-color);
+    border-right: 3px solid var(--outline-color);
+    flex-shrink: 0; /* Prevent posts from shrinking */
+}
+
+/* For continuous animation, we need to duplicate the fence content.
+   This can be done by making the fence-strip much wider than the viewport,
+   or by using JavaScript to clone elements, or purely with CSS.
+   For simplicity and vanilla CSS, we'll animate a larger container.
+   The fence-posts are inside the fence-strip, which will have a very wide
+   virtual width, and then that entire strip will be translated.
+*/
+.fence-top {
+    animation: moveFenceLeft 20s linear infinite;
+}
+.fence-bottom {
+    animation: moveFenceRight 20s linear infinite;
+}
+
+/* These animations translate the entire fence strip (which is very wide) */
+@keyframes moveFenceLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); } /* Move half its duplicated width */
+}
+@keyframes moveFenceRight {
+    from { transform: translateX(-50%); } /* Start halfway */
+    to { transform: translateX(0); } /* Move back to start */
+}
+
+
+/* --- 4. Main Content - Discovery Page --- */
+.discover-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* Hide cloud overflow */
+    padding: 50px 0; /* Add some vertical padding */
+}
+
+.world-map-background {
+    position: absolute;
+    width: 90%; /* Occupy most of the width */
+    height: auto;
+    max-width: 1200px; /* Max size for map */
+    opacity: 0.8; /* Make it slightly faded */
+    z-index: 1; /* Below cards */
+    pointer-events: none; /* Make it non-interactive */
+}
+
+/* Cloud animations */
+.cloud {
+    position: absolute;
+    width: 250px;
+    height: auto;
+    z-index: 2;
+    animation: moveCloud 30s linear infinite;
+    pointer-events: none;
+}
+
+.cloud-1 {
+    top: 10%;
+    left: 80%;
+    animation-delay: 0s;
+    animation-duration: 35s;
+}
+.cloud-2 {
+    top: 70%;
+    left: 40%;
+    animation-delay: -10s;
+    animation-duration: 40s;
+}
+.cloud-3 {
+    top: 35%;
+    left: 10%;
+    animation-delay: -20s;
+    animation-duration: 30s;
+}
+
+@keyframes moveCloud {
+    0% {
+        transform: translateX(calc(100vw + 200px));
+        opacity: 0; /* <-- ADDED: Start invisible */
+    }
+    10%, 90% {
+        opacity: 1; /* <-- ADDED: Fade in and stay visible */
+    }
+    100% {
+        transform: translateX(calc(-100% - 200px));
+        opacity: 0; /* <-- ADDED: Fade out */
+    }
+}
+
+/* Chapter Cards */
+.chapter-card {
+    background-color: var(--card-bg-color);
+    border: 3px solid var(--outline-color);
+    border-radius: 15px;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: 6px 6px 0 var(--outline-color);
+    position: absolute; /* Absolute positioning for layout */
+    z-index: 10; /* Above map and clouds */
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 200px; /* Ensure a minimum width */
+}
+
+.chapter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 0 var(--outline-color);
+}
+
+.chapter-card h2 {
+    font-family: var(--logo-font);
+    font-size: 1.8rem;
+    color: #fff;
+    background-color: var(--button-bg-color);
+    border: 3px solid var(--outline-color);
+    border-radius: 10px;
+    padding: 8px 15px;
+    margin-top: -30px; /* Pull it up to overlap border */
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    box-shadow: 3px 3px 0 var(--outline-color);
+}
+
+.chapter-card p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Positioning for each card - adjust these values as needed to match your image */
+.chapter-1 { top: 15%; left: 10%; }
+.chapter-2 { top: 15%; left: 35%; }
+.chapter-3 { top: 15%; right: 10%; }
+.chapter-4 { bottom: 15%; right: 10%; }
+.chapter-5 { bottom: 15%; left: 35%; }
+.chapter-quiz { bottom: 15%; left: 10%; }
+
+
+/* --- 5. Footer (Unchanged from previous page) --- */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    color: #FBF9D1;
+    background-color: #896C6C;
+    box-shadow: 0 -7px black;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+}
+
+/* --- 6. Responsive Design --- */
+@media (max-width: 1200px) {
+    .chapter-card {
+        padding: 15px 20px;
+        min-width: 180px;
+    }
+    .chapter-card h2 { font-size: 1.5rem; }
+    .chapter-1 { top: 10%; left: 5%; }
+    .chapter-2 { top: 10%; left: 30%; }
+    .chapter-3 { top: 10%; right: 5%; }
+    .chapter-4 { bottom: 10%; right: 5%; }
+    .chapter-5 { bottom: 10%; left: 30%; }
+    .chapter-quiz { bottom: 10%; left: 5%; }
+}
+
+@media (max-width: 768px) {
+    nav { flex-direction: column; gap: 15px; }
+    .logo { margin-left: 0; }
+    nav ul { gap: 20px; }
+
+    .discover-main {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+        padding: 20px 0;
+        gap: 30px; /* Space between stacked cards */
+        height: auto;
+    }
+    .world-map-background {
+        width: 100%; /* Scale map to be larger to fill more space when cards stack */
+        opacity: 0.3;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .cloud {
+        width: 100px;
+        animation-duration: 20s !important; /* Speed up clouds */
+    }
+
+    .chapter-card {
+        position: static; /* Remove absolute positioning for stacking */
+        width: 80%; /* Make cards take more width */
+        max-width: 300px;
+        margin: 0 auto; /* Center cards */
+        transform: none !important; /* Override potential animations */
+        box-shadow: 4px 4px 0 var(--outline-color);
+    }
+    .chapter-card:hover { transform: none; box-shadow: 6px 6px 0 var(--outline-color); }
+    .chapter-card h2 { margin-top: -20px; font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+    header { padding: 15px 2%; }
+    nav ul { gap: 10px; font-size: 1rem; }
+    .logo { font-size: 1.8rem; }
+    .fence-strip { height: 40px; }
+    .fence-post { width: 30px; }
+    .discover-main { padding: 10px 0; }
+    .chapter-card { width: 90%; }
+    footer { padding: 10px; }
+}
