@@ -9,14 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/study.css">
-    <link rel="icon" type="image/x-icon" href="../images/Logo (Regular).svg">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="icon" type="image/x-icon" href="images/Logo (Regular).svg">
 </head>
 <body>
 
     <header>
         <nav>
-            <img src="../images/Logo ALL.png" alt="PAWLearn Logo" width=15%>
+            <img src="images/Logo ALL.png" alt="PAWLearn Logo" width=15%>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="study.html">Study</a></li>
@@ -37,53 +37,22 @@
         <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
     </div>
 
-    <main class="discover-main">
-        <img src="../images/World.svg" alt="Stylized world map" class="world-map-background">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-1">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-2">
-        <img src="../images/Cloud.svg" alt="A stylized cloud" class="cloud cloud-3">
+    <main class="study-page-main">
+        <div class="study-container">
+            <div class="study-card">
+                <div class="paperclip"></div>
 
-        <a href="detail.html?chapter=1" class="card-link">
-            <div class="chapter-card chapter-1">
-                <h2>Chapter 1</h2>
-                <p>Strategies for Effective<br>Reading and Writing</p>
+                <img src="images/Logo 2.png" alt="PAWLearn Logo" width=15%>
+                <h1 class="subject-title" id="chapter-title"></h1>
+                <p class="subject-description" id="chapter-description"></p>
+                <div id="video-container" id="video-container"></div>
             </div>
-        </a>
 
-        <a href="detail.html?chapter=2" class="card-link">
-            <div class="chapter-card chapter-2">
-                <h2>Chapter 2</h2>
-                <p>Unity, Coherence,<br>and Summarizing</p>
+            <div class="navigation-buttons">
+                <button class="btn btn-back" id="back-btn">&lt; Back</button>
+                <button class="btn btn-next" id="next-btn">Next &gt;</button>
             </div>
-        </a>
-
-        <a href="detail.html?chapter=3" class="card-link">
-            <div class="chapter-card chapter-3">
-                <h2>Chapter 3</h2>
-                <p>Essay Writing<br>and Paraphrasing</p>
-            </div>
-        </a>
-
-        <a href="detail.html?chapter=4" class="card-link">
-            <div class="chapter-card chapter-4">
-                <h2>Chapter 4</h2>
-                <p>Writing Essays<br>and Analyzing Arguments</p>
-            </div>
-        </a>
-
-        <a href="detail.html?chapter=5" class="card-link">
-            <div class="chapter-card chapter-5">
-                <h2>Chapter 5</h2>
-                <p>Writing an Analytical Essay<br>with APA Citation</p>
-            </div>
-        </a>
-
-        <a href="quiz.html" class="card-link">
-            <div class="chapter-card chapter-quiz">
-                <h2>Quiz</h2>
-                <p>Test your skill</p>
-            </div>
-        </a>
+        </div>
     </main>
 
     <div class="fence-strip-downbar fence">
@@ -102,6 +71,6 @@
         <p>Made by rasyidrizky</p>
     </footer>
 
-    <script src="../js/study.js"></script>
+    <script src="js/detail.js"></script>
 </body>
 </html>
