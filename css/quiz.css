@@ -1,0 +1,311 @@
+/*. General Setup */
+:root {
+    --bg-color: #f3e9d2;
+    --panel-color: #c6a49a;
+    --button-bg-color: #8b7166;
+    --text-color: #3a3a3a;
+    --outline-color: #000000;
+    --card-bg-color: #ffffff;
+    --logo-font: 'Fredoka One', cursive;
+    --body-font: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Header */
+header {
+    padding: 20px 5%;
+    width: 100%;
+    z-index: 100;
+    background-color: #896C6C;
+    box-shadow: 0 7px black;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.logo { 
+    font-family: var(--logo-font); 
+    font-size: 2rem; 
+}
+.paw { 
+    position: relative; 
+    display: inline-block; 
+    color: transparent; 
+    width: 25px; 
+    height: 1.2em; 
+    vertical-align: middle; 
+}
+.paw::before { 
+    content: ''; 
+    position: absolute; 
+    width: 60%; 
+    height: 50%; 
+    background-color: var(--text-color); 
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%; 
+    bottom: 15%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+}
+.paw::after { 
+    content: ''; 
+    position: absolute;
+    width: 24%; 
+    height: 24%; 
+    background-color: var(--text-color); 
+    border-radius: 50%; 
+    top: 15%; 
+    left: 5%; 
+    box-shadow: 140% -5%, 0 0 var(--text-color), 280% 5%, 0 0 var(--text-color); 
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+nav ul li a {
+    font-size: 25px;
+    -webkit-text-stroke: 1px black;
+    text-decoration: none;
+    color: #FBF9D1;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+nav ul li a:hover {
+    color: #7b5e48;
+}
+
+/* Fence Strip Animations */
+.fence-strip-topbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-topbar 3s ease-in-out infinite;
+}
+.fence-strip-downbar {
+    height: 60px;
+    border-top: 3px solid var(--outline-color);
+    border-bottom: 3px solid var(--outline-color);
+    display: flex;
+    z-index: 50;
+    
+    animation: wiggle-downbar 3s ease-in-out infinite;
+}
+.fence-post {
+    width: 60px;
+    height: 100%;
+    border-right: 3px solid var(--outline-color);
+    flex-shrink: 0;
+}
+
+.fence .fence-post {
+    background-color: #C1856D;
+}
+
+@keyframes wiggle-topbar {
+    0%, 100% {
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(-50px);
+    }
+}
+@keyframes wiggle-downbar {
+    0%, 100% {
+        transform: translateX(-50px);
+    }
+    50% {
+        transform: translateX(0);
+    }
+}
+
+/* Main */
+.quiz-page-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 40px 20px;
+}
+
+.quiz-card {
+    background-color: var(--card-bg-color);
+    border: 3px solid var(--outline-color);
+    border-radius: 15px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
+    width: 100%;
+    max-width: 800px;
+    min-height: 60vh;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header .logo-small {
+    font-family: var(--logo-font);
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.card-header .logo-small .paw { width: 20px; }
+
+.card-header .question-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.card-header .question-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.card-body {
+    flex-grow: 1;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Multiple Choice Options */
+.mc-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+.mc-option {
+    padding: 15px;
+    font-size: 1rem;
+    border: 2px solid var(--outline-color);
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.mc-option:hover {
+    background-color: #ddd;
+}
+.mc-option.selected {
+    background-color: var(--button-bg-color);
+    color: white;
+    border-color: var(--button-bg-color);
+}
+
+/* Fill in the Blank */
+.fill-blank-container input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 2px solid var(--outline-color);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Drag and Drop */
+.drag-drop-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 20px;
+}
+.drag-items, .drop-targets {
+    width: 45%;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    min-height: 150px;
+}
+.drag-item {
+    background-color: #bce1f2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--outline-color);
+    border-radius: 8px;
+    cursor: grab;
+}
+.drop-target {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--outline-color);
+    border-radius: 8px;
+    min-height: 50px;
+}
+
+/* Navigation Buttons */
+.btn {
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: 3px solid var(--outline-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 0px var(--outline-color);
+}
+
+.btn-back {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    box-shadow: 0px 2px 0px var(--outline-color);
+}
+
+.btn-next {
+    background-color: var(--button-bg-color);
+    color: var(--card-bg-color);
+    box-shadow: 0px 2px 0px var(--outline-color);
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    color: #FBF9D1;
+    background-color: #896C6C;
+    box-shadow: 0 -7px black;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-header .question-title { font-size: 2rem; }
+    .quiz-card { padding: 20px; min-height: 70vh; }
+}

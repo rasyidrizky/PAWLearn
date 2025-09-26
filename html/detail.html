@@ -3,52 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PöWLearn - Study</title>
+    <title>PAWLearn</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/detail.css">
+    <link rel="icon" type="image/x-icon" href="../images/Logo (Regular).svg">
 </head>
 <body>
 
     <header>
         <nav>
-            <div class="logo">P<span class="paw">ö</span>WLearn</div>
+            <img src="../images/Logo ALL.png" alt="PAWLearn Logo" width=15%>
             <ul>
-                <li><a href="#">Study</a></li>
-                <li><a href="#">Discover</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="study.html">Study</a></li>
+                <li><a href="discover.html">Discover</a></li>
             </ul>
         </nav>
     </header>
+
+    <div class="fence-strip-topbar fence">
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+    </div>
 
     <main class="study-page-main">
         <div class="study-container">
             <div class="study-card">
                 <div class="paperclip"></div>
 
-                <div class="logo-small">P<span class="paw">ö</span>WLearn</div>
-                <h1 class="subject-title">Subject Name</h1>
-                <p class="subject-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                    incididunt ut labore et dolore magna aliqua.
-                </p>
+                <img src="../images/Logo 2.png" alt="PAWLearn Logo" width=15%>
+                <h1 class="subject-title" id="chapter-title"></h1>
+                <p class="subject-description" id="chapter-description"></p>
+                <div id="video-container" id="video-container"></div>
             </div>
 
             <div class="navigation-buttons">
-                <button class="btn btn-back">&lt; Back</button>
-                <button class="btn btn-next">Next &gt;</button>
+                <button class="btn btn-back" id="back-btn">&lt; Back</button>
+                <button class="btn btn-next" id="next-btn">Next &gt;</button>
             </div>
         </div>
-        <div class="background-panel"></div>
     </main>
+
+    <div class="fence-strip-downbar fence">
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+    </div>
 
     <footer>
         <p>Made by rasyidrizky</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../js/detail.js"></script>
 </body>
 </html>
