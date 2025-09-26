@@ -7,29 +7,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizData = [
         {
             title: "Question 1",
-            questionText: "What is the capital of Indonesia?",
+            questionText: "Instructions: Read the paragraph below and select the most effective topic sentence from the options provided. \"First, physical exercise builds muscle strength and increases stamina. Aerobic activities strengthen heart muscles. Running or cycling can also improve endurance. Furthermore, physical activity greatly benefits mental health. It reduces stress and helps people to relax. Also, individuals can make new friends by joining a gym or sports class. In addition, people can learn new skills when they practice a sport or activity.\" ",
             type: "multipleChoice",
-            options: ["Bandung", "Jakarta", "Surabaya", "Medan"],
-            answer: "Jakarta"
+            options: ["Many people join a gym or play a sport.", "When people participate in a physical activity, they gain many advantages.", "People should participate in sports that they like to keep their motivation."],
+            answer: "When people participate in a physical activity, they gain many advantages."
         },
         {
             title: "Question 2",
-            questionText: "Complete the saying: 'Practice makes ______'.",
+            questionText: " A quality summary must be objective, complete, and have __________, which means giving equal attention to each of the author's main ideas.",
             type: "fillInTheBlank",
-            answer: "perfect"
+            answer: "balance"
         },
         {
             title: "Question 3",
-            questionText: "Drag the animal to its correct food source.",
+            questionText: "An introductory paragraph has three main parts that should appear in a specific order. Drag and drop the components below into the correct sequence as they would appear in an essay's introduction.",
             type: "dragAndDrop",
             dragItems: [
-                { id: "dog", text: "🐶 Dog" },
-                { id: "monkey", text: "🐵 Monkey" }
+                { id: "thesis", text: "Thesis Sentence" },
+                { id: "transition", text: "Transition" },
+                { id: "hook", text: "Hook" },
             ],
             dropTargets: [
-                { id: "banana", text: "🍌 Banana", correctDragId: "monkey" },
-                { id: "bone", text: "🦴 Bone", correctDragId: "dog" }
+                { id: "first", text: "1st Part", correctDragId: "hook" },
+                { id: "second", text: "2nd Part", correctDragId: "transition" },
+                { id: "third", text: "3rd Part", correctDragId: "thesis" }
             ]
+        },
+        {
+            title: "Question 4",
+            questionText: "Instructions: In addition to presenting evidence to support its own side, a strong argumentative essay must also include which of the following?",
+            type: "multipleChoice",
+            options: ["A detailed description of the sights and sounds to bring the topic alive.", "A counterargument that acknowledges the opposing viewpoint and a refutation that responds to it.", "A \"focus on cause\" method or a \"focus on effect\" method.", "A \"block method\" or a \"point-by-point method\" to organize paragraphs."],
+            answer: "A counterargument that acknowledges the opposing viewpoint and a refutation that responds to it."
+        },
+        {
+            title: "Question 5",
+            questionText: "Instructions: When you are directly quoting from a work using APA style, you must include specific information in the in-text citation. Fill in the blank to complete the rule. If you are directly quoting from a work, you will need to include the author, year of publication, and the _______ for the reference.",
+            type: "fillInTheBlank",
+            answer: "page number"
         }
     ];
 
@@ -121,9 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startTime = localStorage.getItem('quizStartTime');
         const endTime = Date.now();
         const durationInMs = endTime - startTime;
-
         localStorage.setItem('quizDuration', durationInMs);
-        
         localStorage.removeItem('quizStartTime');
 
         let score = 0;
@@ -151,9 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             target => target.correctDragId === dragItem.id
                         );
                         
-                        if (userAnswer[dragItem.id] !== correctTarget.id) {
+                        if (!correctTarget || userAnswer[dragItem.id] !== correctTarget.id) {
                             allCorrect = false;
-                            break;
+                            break; 
                         }
                     }
                     
@@ -166,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('quizScore', score);
         localStorage.setItem('totalQuestions', quizData.length);
-
         window.location.href = 'result.html';
     }
 
