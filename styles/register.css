@@ -1,0 +1,217 @@
+:root {
+    --primary-text-color: #333;
+    --secondary-text-color: #666;
+    --button-bg-color: #795548;
+    --button-text-color: #fff;
+    --border-color: #ccc;
+    --input-bg-color: #f9f9f9;
+    --google-blue: #4285F4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/background/register.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.spinning-clock {
+    position: absolute;
+    top: 4%;
+    left: 75%;
+    width: 150px;
+    height: 150px;
+    animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.login-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.login-form-container {
+    flex: 1;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    max-width: 50%;
+    min-width: 400px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+.login-logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5em;
+    color: var(--primary-text-color);
+    margin-bottom: 30px;
+}
+
+form {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    background-color: var(--input-bg-color);
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    font-size: 1em;
+}
+
+.input-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+input[type="email"],
+input[type="password"] {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px 0;
+    font-size: 1em;
+    background-color: transparent;
+    color: var(--primary-text-color);
+}
+
+input::placeholder {
+    color: var(--secondary-text-color);
+}
+
+.or-divider {
+    text-align: center;
+    position: relative;
+    margin: 10px 0;
+    color: var(--secondary-text-color);
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.or-divider::before {
+    left: 0;
+}
+
+.or-divider::after {
+    right: 0;
+}
+
+.or-divider span {
+    background-color: #fff;
+    padding: 0 10px;
+}
+
+.google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #fff;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: var(--primary-text-color);
+}
+
+.google-login:hover {
+    background-color: #f0f0f0;
+}
+
+.google-login img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.signup-link {
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    margin-top: 10px;
+}
+
+.signup-link a {
+    color: var(--google-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.login-button:hover {
+    background-color: #6a443a;
+}

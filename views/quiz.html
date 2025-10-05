@@ -9,16 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/discover.css">
-    <link rel="icon" type="image/x-icon" href="images/Logo (Regular).svg">
+    <link rel="stylesheet" href="../styles/quiz.css">
+    <link rel="icon" type="image/x-icon" href="../assets/elements/Logo (Regular).svg">
 </head>
 <body>
 
     <header>
         <nav>
-            <img src="images/Logo ALL.png" alt="PAWLearn Logo" width=15%>
+            <img src="../assets/elements/Logo ALL.png" alt="PAWLearn Logo" width=15%>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="../index.html">Home</a></li>
                 <li><a href="study.html">Study</a></li>
                 <li><a href="discover.html">Discover</a></li>
             </ul>
@@ -37,27 +37,21 @@
         <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
     </div>
 
-    <main class="discover-page-main">
-        <div class="fact-container">
-            <h2>Recent Fact:</h2>
-            <div class="fact-box">
-                <h3>Random Fact #<span id="fact-id">0</span></h3>
-                <p id="fact-text">
-                    Click the dog on the middle to unlock a fact.
+    <main class="quiz-page-main">
+        <div class="quiz-card">
+            <div class="card-header">
+                <img src="../assets/elements/Logo ALL.png" alt="PAWLearn Logo" width=15%>
+                <h1 class="question-title" id="question-title"></h1>
+                <p class="question-text" id="question-text">
                 </p>
             </div>
-        </div>
 
-        <div class="clicker-container">
-            <img src="images/Logo (Regular).png" alt="A pug face to click" class="dog-clicker" onclick="addClick()">
-            <h1 class="total-clicks">Total Clicks: <span id="no_of_click">0</span></h1>
-            <p class="clicks-per-second">Click per second: <span id="click_per_second">0</span></p>
-        </div>
+            <div class="card-body" id="quiz-body"></div>
 
-        <div class="progress-container">
-            <h2>Next Fact:</h2>
-            <p class="clicks-to-next"><span id="click_goal">100</span> Clicks</p>
-            <progress id="goal_percentage" class="progress" value="0" max="100"></progress>
+            <div class="card-footer">
+                <button class="btn btn-back" id="back-btn">&lt; Back</button>
+                <button class="btn btn-next" id="next-btn">Next &gt;</button>
+            </div>
         </div>
     </main>
 
@@ -77,6 +71,6 @@
         <p>Made by rasyidrizky</p>
     </footer>
 
-    <script src="js/discover.js"></script>
+    <script src="../services/quiz.js"></script>
 </body>
 </html>

@@ -33,56 +33,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    const titleElement = document.getElementById('chapter-title');
-    const descriptionElement = document.getElementById('chapter-description');
-    const videoContainer = document.getElementById('video-container');
-    const nextButton = document.getElementById('next-btn');
-    const backButton = document.getElementById('back-btn');
+    // CLASS DEFINITION
+    class Study {
+        constructor(contents, elements) {
+            this.contents = contents;
+            this.elements = elements;
 
-    const params = new URLSearchParams(window.location.search);
-    const chapterId = params.get('chapter');
+            this.params = new URLSearchParams(window.location.search);
+            this.currentChapter = this.params.get('chapter');
+            this.currId = this.contents.findIndex(chapter => chapter.id === this.currentChapter);
+        }
 
-    const currentIndex = studyContent.findIndex(chapter => chapter.id === chapterId);
-    
-    if (currentIndex !== -1) {
-        const chapterData = studyContent[currentIndex];
-        titleElement.textContent = chapterData.title;
-        descriptionElement.textContent = chapterData.description;
+        init() {
+            this.setupEventListeners();
+            this.renderCurrentChapter();
+        }
+        
+        renderCurrentChapter() {            
+            if (this.currId !== -1) {
+                const chapterData = this.contents[this.currId];
+                this.elements.titleElement.textContent = chapterData.title;
+                this.elements.descriptionElement.textContent = chapterData.description;
 
-        videoContainer.innerHTML = '';
-        if (chapterData.youtubeIds && chapterData.youtubeIds.length > 0) {
-            chapterData.youtubeIds.forEach(videoId => {
-                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                videoContainer.innerHTML += `
-                    <div class="video-wrapper">
-                        <iframe src="${embedUrl}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                `;
+                this.elements.videoContainer.innerHTML = '';
+
+                if (chapterData.youtubeIds && chapterData.youtubeIds.length > 0) {
+                    chapterData.youtubeIds.forEach(videoId => {
+                        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        this.elements.videoContainer.innerHTML += `
+                            <div class="video-wrapper">
+                                <iframe src="${embedUrl}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        `;
+                    });
+                }
+
+                if (this.currId === 0) {
+                    this.elements.backButton.disabled = true;
+                }
+                else if (this.currId === chapterData.length - 1) {
+                    this.elements.nextButton.disabled = true;
+                }
+            }
+        }
+
+        setupEventListeners() {
+            this.elements.nextButton.addEventListener('click', () => {
+                if (this.currId < this.contents.length - 1) {
+                    const nextChapterId = this.contents[this.currId + 1].id;
+                    window.location.href = `detail.html?chapter=${nextChapterId}`;
+                }
+            });
+
+            this.elements.backButton.addEventListener('click', () => {
+                if (this.currId > 0) {
+                    const prevChapterId = this.contents[this.currId - 1].id;
+                    window.location.href = `detail.html?chapter=${prevChapterId}`;
+                }
             });
         }
-    } else {
-        titleElement.textContent = 'Chapter Not Found';
-        descriptionElement.textContent = 'Please select a valid chapter from the study page.';
     }
 
-    nextButton.addEventListener('click', () => {
-        if (currentIndex < studyContent.length - 1) {
-            const nextChapterId = studyContent[currentIndex + 1].id;
-            window.location.href = `detail.html?chapter=${nextChapterId}`;
-        }
-    });
+    // INITIALIZATION
+    const elements = {
+        titleElement: document.getElementById('chapter-title'),
+        descriptionElement: document.getElementById('chapter-description'),
+        videoContainer: document.getElementById('video-container'),
+        nextButton: document.getElementById('next-btn'),
+        backButton: document.getElementById('back-btn'),
+    };
 
-    backButton.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            const prevChapterId = studyContent[currentIndex - 1].id;
-            window.location.href = `detail.html?chapter=${prevChapterId}`;
-        }
-    });
+    const study = new Study(studyContent, elements);
+
+    study.init();
     
-    if (currentIndex === 0) {
-        backButton.disabled = true;
-    }
-    else if (currentIndex === studyContent.length - 1) {
-        nextButton.disabled = true;
-    }
 });
