@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWLearn - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="icon" type="image/x-icon" href="../assets/elements/Logo (Regular).svg">
+</head>
+<body>
+    <img src="../assets/elements/bone.svg" alt="Floating dog bone" class="floating-bone bone-1">
+    <img src="../assets/elements/bone.svg" alt="Floating dog bone" class="floating-bone bone-2">
+    <img src="../assets/elements/bone.svg" alt="Floating dog bone" class="floating-bone bone-3">
+    <img src="../assets/elements/bone.svg" alt="Floating dog bone" class="floating-bone bone-4">
+    <img src="../assets/elements/bone.svg" alt="Floating dog bone" class="floating-bone bone-5">
+
+    <header>
+        <nav>
+            <img src="../assets/elements/Logo ALL.png" alt="PAWLearn Logo" width=15%>
+            <ul>
+                <li><a href="study.html">Study</a></li>
+                <li><a href="discover.html">Discover</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="fence-strip-topbar fence">
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+    </div>
+
+    <main class="profile-main">
+        <div class="id-card">
+            <div class="id-card-header">
+                <img src="../assets/icons/paw.svg" alt="Paw Icon" class="paw-icon">
+                <h2>ID Card</h2>
+            </div>
+            
+            <div class="user-info-section">
+                <div class="profile-pic-wrapper">
+                    <img id="profile-picture" src="images/default-profile.png" alt="Profile Picture" class="profile-pic">
+                </div>
+                <div class="user-details">
+                    <p class="last-signed-in">Last signed in: <span id="last-signed-in-date">Time & Date</span></p>
+                    <h3 id="username-fullname">Username/Fullname</h3>
+                    <p id="user-email">Email</p>
+                </div>
+                <div class="user-actions"> 
+                    <button class="reset-password-btn">Reset Password</button>
+                    <button class="logout-button" id="logout-btn">Log Out</button>
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <div class="achievement-item">
+                    <p>Chapters completed</p>
+                    <div class="achievement-visual">
+                        <img id="trophy-img" src="images/trophy.png" alt="Trophy" class="achievement-icon hidden">
+                        <span id="chapters-completed-counter">XX</span>
+                    </div>
+                </div>
+                <div class="achievement-item">
+                    <p>Quiz completed</p>
+                    <div class="achievement-visual">
+                        <img id="medal-img" src="images/medal.png" alt="Medal" class="achievement-icon hidden">
+                        <span id="quiz-completed-counter">XX</span>
+                    </div>
+                </div>
+                <div class="achievement-item">
+                    <p>Time spent</p>
+                    <span id="time-spent-counter">HH:MM:SS</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="fence-strip-downbar fence">
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+        <div class="fence-post"></div><div class="fence-post"></div><div class="fence-post"></div>
+    </div>
+
+    <footer>
+        <p>Made by rasyidrizky</p>
+    </footer>
+
+    <script src="../api/auth.js" type="module"></script> 
+    <script src="../services/profile.js" type="module"></script>
+</body>
+</html>

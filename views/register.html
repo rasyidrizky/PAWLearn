@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/register.css"> 
     <link rel="icon" type="image/x-icon" href="../assets/elements/Logo (Regular).svg">
 </head>
@@ -18,43 +20,44 @@
         <img src="../assets/elements/clock.png" alt="Spinning Clock" class="spinning-clock">
     </div>
 
-    <div class="login-wrapper">
-        <div class="login-form-container">
+    <div class="register-wrapper">
+        <div class="register-form-container">
             <img src="../assets/elements/Logo 2.png" alt="PAWLearn Logo" width=20%>
             <h1>Welcome!</h1> <form>
                 <div class="input-group">
-                    <img src="../assets/elements/mail-icon.svg" alt="Email Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe0be;</i>
                     <input type="email" placeholder="Insert your email">
                 </div>
                 
                 <div class="input-group">
-                    <img src="../assets/elements/user-icon.svg" alt="Username Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe7fd;</i>
                     <input type="text" placeholder="Insert your username">
                 </div>
 
                 <div class="input-group">
-                    <img src="../assets/elements/lock-icon.svg" alt="Password Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe897;</i>
                     <input type="password" placeholder="Insert your password">
                 </div>
 
                 <div class="input-group">
-                    <img src="../assets/elements/password-confirm-icon.svg" alt="Confirm Password Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe898;</i>
                     <input type="password" placeholder="Insert your password again">
                 </div>
 
                 <p class="or-divider"><span>or</span></p>
 
-                <button type="button" class="google-login">
-                    <img src="../assets/elements/google-icon.svg" alt="Google Logo">
+                <button type="button" class="google-login" id="google-button">
+                    <i class="fa fa-google" style="margin-right: 10px;"></i>
                     Continue with Google
                 </button>
 
                 <p class="signup-link">Already have an account? <a href="login.html">Log In</a></p>
 
-                <button type="submit" class="login-button">Sign up</button>
+                <button type="button" class="register-button" id="register-button">Sign Up</button>
             </form>
         </div>
     </div>
 
+    <script src="../services/login.js" type="module"></script>
 </body>
 </html>

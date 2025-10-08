@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="icon" type="image/x-icon" href="../assets/elements/Logo (Regular).svg">
 
@@ -24,29 +26,30 @@
             <img src="../assets/elements/Logo 2.png" alt="PAWLearn Logo" width=20%>
             <h1>Welcome Back!</h1>
 
-            <form>
+            <form action="">
                 <div class="input-group">
-                    <img src="../assets/elements/mail-icon.svg" alt="Email Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe0be;</i>
                     <input type="email" placeholder="Insert your email">
                 </div>
                 <div class="input-group">
-                    <img src="../assets/elements/lock-icon.svg" alt="Password Icon" class="input-icon">
+                    <i class="material-icons" style="margin-right: 10px;">&#xe897;</i>
                     <input type="password" placeholder="Insert your password">
                 </div>
 
                 <p class="or-divider"><span>or</span></p>
 
-                <button type="button" class="google-login">
-                    <img src="../assets/elements/google-icon.svg" alt="Google Logo">
+                <button type="button" class="google-login" id="google-button">
+                    <i class="fa fa-google" style="margin-right: 10px;"></i>
                     Continue with Google
                 </button>
 
-                <p class="signup-link">Don't have an account? <a href="#">Sign Up</a></p>
+                <p class="signup-link">Don't have an account? <a href="register.html">Sign Up</a></p>
 
-                <button type="submit" class="login-button">Log In</button>
+                <button type="button" class="login-button" id="log-in-button">Log In</button>
             </form>
         </div>
-        </div>
+    </div>
 
+    <script src="../services/login.js" type="module"></script>
 </body>
 </html>
