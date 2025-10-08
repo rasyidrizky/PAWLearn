@@ -3,7 +3,7 @@ import { chapters } from '../constants/chapters.js';
 document.addEventListener('DOMContentLoaded', () => {
 
     // CLASS DEFINITION
-    class Study {
+    class Detail {
         constructor(contents, elements) {
             this.contents = contents;
             this.elements = elements;
@@ -72,8 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         backButton: document.getElementById('back-btn'),
     };
 
-    const study = new Study(chapters, elements);
+    const detail = new Detail(chapters, elements);
 
-    study.init();
-    
+    detail.init();
 });

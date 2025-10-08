@@ -2,23 +2,11 @@ import { auth } from "../api/config/firebaseConfig.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
 class Auth {
-    constructor() {
+    constructor(protectedPaths, authPaths) {
         document.body.style.visibility = 'hidden';
         this.currentPagePath = window.location.pathname;
-
-        this.protectedPaths = [
-            '/PAWLearn/views/study.html',
-            '/PAWLearn/views/discover.html',
-            '/PAWLearn/views/profile.html',
-            '/PAWLearn/views/quiz.html',
-            '/PAWLearn/views/detail.html',
-            '/PAWLearn/views/result.html'
-        ];
-        
-        this.authPaths = [
-            '/PAWLearn/views/login.html',
-            '/PAWLearn/views/register.html'
-        ];
+        this.protectedPaths = protectedPaths;
+        this.authPaths = authPaths;
     }
 
     init() {
@@ -26,23 +14,23 @@ class Auth {
             const isLoggedIn = !!user;
 
             if (isLoggedIn) {
-                this._startSessionTimer();
-                this._setupUnloadListener(user.uid);
+                this.startSessionTimer();
+                this.setupEventListeners(user.uid);
             }
 
-            this._handleRedirects(isLoggedIn);
-            this._renderNavbar(isLoggedIn);
+            this.handleRedirects(isLoggedIn);
         });
     }
 
-    _startSessionTimer() {
+    startSessionTimer() {
         if (!sessionStorage.getItem('sessionStartTime')) {
             sessionStorage.setItem('sessionStartTime', Date.now());
         }
     }
 
-    _setupUnloadListener(userId) {
+    setupEventListeners() {
         if (window.hasUnloadListener) return;
+
         window.addEventListener('beforeunload', () => {
             const sessionStartTime = parseInt(sessionStorage.getItem('sessionStartTime'), 10);
             if (sessionStartTime) {
@@ -56,20 +44,22 @@ class Auth {
         window.hasUnloadListener = true;
     }
 
-    _handleRedirects(isLoggedIn) {
+    handleRedirects(isLoggedIn) {
         const isProtected = this.protectedPaths.some(path => this.currentPagePath.endsWith(path));
         const isAuthPage = this.authPaths.some(path => this.currentPagePath.endsWith(path));
 
         if (!isLoggedIn && isProtected) {
             window.location.replace('/PAWLearn/views/login.html');
-        } else if (isLoggedIn && isAuthPage) {
+        } 
+        else if (isLoggedIn && isAuthPage) {
             window.location.replace('/PAWLearn/views/study.html');
-        } else {
-            this._showPage();
+        } 
+        else {
+            this.showPage();
         }
     }
 
-    _addLogoutListener() {
+    addLogoutListener() {
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
@@ -78,17 +68,34 @@ class Auth {
                     localStorage.clear();
                     sessionStorage.clear();
                     window.location.href = '/PAWLearn/views/login.html';
-                }).catch((error) => {
+                })
+                .catch((error) => {
                     console.error("Sign out error:", error);
                 });
             });
         }
     }
 
-    _showPage() {
+    showPage() {
         document.body.style.visibility = 'visible';
     }
 }
 
 // INITIALIZATION
-new Auth().init();
+const protectedPaths = [
+    '/PAWLearn/views/study.html',
+    '/PAWLearn/views/discover.html',
+    '/PAWLearn/views/profile.html',
+    '/PAWLearn/views/quiz.html',
+    '/PAWLearn/views/detail.html',
+    '/PAWLearn/views/result.html'
+]
+
+const authPaths = [
+    '/PAWLearn/views/login.html',
+    '/PAWLearn/views/register.html'
+]
+
+const authManager = new Auth(protectedPaths, authPaths);
+
+authManager.init();

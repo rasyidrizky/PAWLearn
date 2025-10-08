@@ -5,32 +5,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // CLASS DEFINITION
     class Profile {
-        constructor() {
-            this.elements = {
-                profilePic: document.getElementById('profile-picture'),
-                lastSignedIn: document.getElementById('last-signed-in-date'),
-                usernameFullname: document.getElementById('username-fullname'),
-                userEmail: document.getElementById('user-email'),
-                timeSpentCounter: document.getElementById('time-spent-counter'),
-                logoutBtn: document.getElementById('logout-btn')
-            };
+        constructor(elements) {
+            this.elements = elements;
             this.DEFAULT_PROFILE_PIC = '../assets/elements/Logo (Regular).svg';
             this.timeInterval = null;
         }
 
         init() {
-            this._setupEventListeners();
+            this.setupEventListeners();
+
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    this._displayUserInfo(user);
-                    this._startLiveCounter(user);
+                    this.displayInfo(user);
+                    this.startTime(user);
                 } else {
                     window.location.href = 'login.html';
                 }
             });
         }
 
-        _setupEventListeners() {
+        setupEventListeners() {
             if (this.elements.logoutBtn) {
                 this.elements.logoutBtn.addEventListener('click', () => {
                     signOut(auth).then(() => {
@@ -43,14 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        _displayUserInfo(user) {
+        displayInfo(user) {
             this.elements.usernameFullname.textContent = user.displayName || user.email.split('@')[0];
             this.elements.userEmail.textContent = user.email;
             this.elements.profilePic.src = user.photoURL || this.DEFAULT_PROFILE_PIC;
             this.elements.lastSignedIn.textContent = new Date(user.metadata.lastSignInTime).toLocaleString();
         }
 
-        _startLiveCounter(user) {
+        startTime(user) {
             let userData = JSON.parse(localStorage.getItem(user.uid)) || { totalTimeSpent: 0 };
             const pageVisitStartTime = Date.now();
 
@@ -58,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const previousTimeSpent = userData.totalTimeSpent;
                 const timeOnThisPage = Math.floor((Date.now() - pageVisitStartTime) / 1000);
                 const totalLiveTime = previousTimeSpent + timeOnThisPage;
-                this.elements.timeSpentCounter.textContent = this._formatTime(totalLiveTime);
+
+                this.elements.timeSpentCounter.textContent = this.formatTime(totalLiveTime);
             };
 
             clearInterval(this.timeInterval);
@@ -66,12 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             window.addEventListener('beforeunload', () => {
                 const timeOnThisPage = Math.floor((Date.now() - pageVisitStartTime) / 1000);
+                
                 userData.totalTimeSpent += timeOnThisPage;
                 localStorage.setItem(user.uid, JSON.stringify(userData));
             });
         }
 
-        _formatTime(totalSeconds) {
+        formatTime(totalSeconds) {
             const hours = Math.floor(totalSeconds / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
             const seconds = totalSeconds % 60;
@@ -80,7 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // INITIALIZATION
-    const profile = new Profile();
+    const elements = {
+        profilePic: document.getElementById('profile-picture'),
+        lastSignedIn: document.getElementById('last-signed-in-date'),
+        usernameFullname: document.getElementById('username-fullname'),
+        userEmail: document.getElementById('user-email'),
+        timeSpentCounter: document.getElementById('time-spent-counter'),
+        logoutBtn: document.getElementById('logout-btn')
+    }
+
+    const profile = new Profile(elements);
 
     profile.init();
 });
