@@ -1,18 +1,24 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import admin from 'firebase-admin';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCQaTgDfU8aOklhLNZxu0jfAGQYkpjbz3Q",
-    authDomain: "pawlearn.firebaseapp.com",
-    projectId: "pawlearn",
-    storageBucket: "pawlearn.firebasestorage.app",
-    messagingSenderId: "775306104507",
-    appId: "1:775306104507:web:dc23fe6e1c6e1cc683a39e",
-    measurementId: "G-279Y771B0X"
-};
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+  : null;
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-export { app, auth, db };
+if (!admin.apps.length) {
+  if (serviceAccount) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+  } else {
+    console.warn("Firebase service account not found in environment variables. Falling back to local file.");
+    const localKey = await import('./serviceAccountKey.json', { assert: { type: 'json' } });
+    admin.initializeApp({
+      credential: admin.credential.cert(localKey.default)
+    });
+  }
+}
+
+const auth = admin.auth();
+const db = admin.firestore();
+
+export { auth, db };
