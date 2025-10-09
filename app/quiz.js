@@ -1,5 +1,5 @@
 import { questions } from "../constants/questions.js";
-import { auth, db } from "../api/config/firebaseConfig.js";
+import { auth, db } from "../service/config/firebaseConfig.js";
 import { 
     doc, 
     getDoc, 

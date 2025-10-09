@@ -1,4 +1,4 @@
-import { auth, db } from "../api/config/firebaseConfig.js";
+import { auth, db } from "../service/config/firebaseConfig.js";
 import { onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { trophy, medal } from "../constants/achievement.js";
