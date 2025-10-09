@@ -1,60 +1,111 @@
+import { auth, db } from "../api/config/firebaseConfig.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // CLASS DEFINITION
     class Discover {
         constructor(facts, elements) {
-            this.elements = elements;
             this.facts = facts;
-
-            this.totalClick = 0;
-            this.click = 0;
-            this.startTime = new Date().getTime();
-            this.currFactId = 0;
+            this.elements = elements;
+            this.totalClicks = 0;
+            this.clicksForCurrentGoal = 0;
+            this.currentFactIndex = 0;
+            this.clicksPerSecond = 0;
+            this.startTime = Date.now();
+            this.user = null;
+            this.docRef = null; 
         }
 
-        init() {
-            this.setupEventListeners();
-        }
-
-        setupEventListeners() {
-            this.elements.doge.addEventListener('click', () => {
-                this.totalClick += 1;
-                this.click += 1;
-
-                const currentTime = new Date().getTime();
-                const elapsedTime = (currentTime - this.startTime) / 1000;
-                const clickpersec = this.totalClick / elapsedTime;
-
-                this.elements.noClick.innerHTML = this.totalClick;
-                this.elements.clickPerSec.innerHTML = clickpersec.toFixed(2);
-
-                let result = Number(this.elements.newGoal);
-
-                this.elements.goalPercent.value = this.click;
-
-                if (this.totalClick % 100 == 0 && this.totalClick <= 1000) {
-                    this.click = 0;
-
-                    let newGoal = result + 100;
-
-                    if (newGoal <= 1000) {
-                        this.elements.newGoal.innerHTML = newGoal;
-                    }
-
-                    this.updateFact((this.totalClick / 100) - 1);
-                }
-                else if (this.totalClick > 1100) {
-                    this.elements.factTextElement.textContent = "Congratulations! You unlocked all the facts.";
+        async init() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    this.user = user;
+                    this.docRef = doc(db, "discover_progress", this.user.uid);
+                    await this.loadProgress();
+                    this.setupEventListeners();
+                    this.startCpsUpdater();
                 }
             });
         }
 
-        updateFact(factIndex) {
-            if (this.facts[factIndex]) {
-                this.currFactId += 1;
-                this.elements.factId.textContent = this.currFactId;
-                this.elements.factTextElement.textContent = facts[factIndex];
+        async loadProgress() {
+            const docSnap = await getDoc(this.docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                this.totalClicks = data.totalClicks || 0;
+                this.currentFactIndex = data.unlockedFacts || 0;
+            } 
+            else {
+                await setDoc(this.docRef, {
+                    username: this.user.displayName || this.user.email.split('@')[0],
+                    totalClicks: 0,
+                    unlockedFacts: 0,
+                });
             }
+            this.updateUI();
+        }
+
+        updateUI() {
+            const currentGoal = (this.currentFactIndex + 1) * 100;
+            this.clicksForCurrentGoal = this.totalClicks % 100;
+            
+            this.elements.noClick.textContent = this.totalClicks;
+            this.elements.clickPerSec.textContent = this.clicksPerSecond.toFixed(2);
+            this.elements.newGoal.textContent = currentGoal > 1000 ? "Max" : currentGoal;
+
+            this.elements.goalPercent.max = 100;
+            this.elements.goalPercent.value = this.clicksForCurrentGoal;
+            
+            this.updateFact();
+        }
+
+        updateFact() {
+            if (this.currentFactIndex > 0) {
+                this.elements.factId.textContent = `${this.currentFactIndex}`;
+                this.elements.factTextElement.textContent = this.facts[this.currentFactIndex - 1];
+            } 
+            else {
+                this.elements.factId.textContent = '0';
+                this.elements.factTextElement.textContent = "Click the dog on the middle to unlock a fact.";
+            }
+
+            if (this.currentFactIndex >= this.facts.length) {
+                this.elements.factTextElement.textContent = "Congratulations! You unlocked all the facts.";
+            }
+        }
+
+        startCpsUpdater() {
+            setInterval(() => {
+                const elapsedTime = (Date.now() - this.startTime) / 1000;
+                this.clicksPerSecond = elapsedTime > 0 ? this.totalClicks / elapsedTime : 0;
+                this.elements.clickPerSec.textContent = this.clicksPerSecond.toFixed(2);
+            }, 1000);
+        }
+
+        setupEventListeners() {
+            this.elements.doge.addEventListener('click', async () => {
+                this.totalClicks++;
+                
+                const newUnlockedFacts = Math.floor(this.totalClicks / 100);
+                
+                if (newUnlockedFacts > this.currentFactIndex) {
+                    this.currentFactIndex = newUnlockedFacts;
+
+                    await updateDoc(this.docRef, {
+                        totalClicks: this.totalClicks,
+                        unlockedFacts: this.currentFactIndex
+                    });
+                } 
+                else {
+                    await updateDoc(this.docRef, {
+                        totalClicks: this.totalClicks
+                    });
+                }
+
+                this.updateUI();
+            });
         }
     }
 

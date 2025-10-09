@@ -54,7 +54,8 @@ export const chapterCard = [
         title: "Quiz", 
         description: "Test your skill", 
         isQuiz: true, 
-        link: "quiz.html", 
+        requiredChapters: 5,
+        link: "quiz.html?id=6", 
         position: { 
             bottom: '15%', 
             left: '11%' 
@@ -114,8 +115,9 @@ export const chapterCard = [
         id: 12, 
         title: "Final Quiz", 
         description: "Comprehensive Test", 
-        isQuiz: true, 
-        link: "quiz.html", 
+        isQuiz: true,
+        requiredChapters: 10, 
+        link: "quiz.html?id=12", 
         position: { 
             bottom: '15%', 
             left: '11%' 

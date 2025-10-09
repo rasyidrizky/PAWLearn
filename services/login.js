@@ -1,10 +1,12 @@
-import { auth  } from "../api/config/firebaseConfig.js";
+import { auth, db } from "../api/config/firebaseConfig.js";
 import { 
     GoogleAuthProvider, 
     signInWithPopup, 
     signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword 
+    createUserWithEmailAndPassword,
+    updateProfile
 } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -54,12 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                // The onAuthStateChanged in auth.js will now handle the redirect.
-                // No need for window.location.href here.
                 console.log("Successfully logged in!", userCredential.user);
 
                 window.location.href = 'study.html'; 
-            } catch (error) {
+            } 
+            catch (error) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
 
@@ -77,10 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
         async loginGoogle() {
             try {
                 const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-                // The onAuthStateChanged in auth.js will now handle the redirect.
-                // No need for window.location.href here.
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    console.log("First time Google sign-in for this user. Creating progress document...");
+                    await setDoc(docRef, {
+                        username: user.displayName, 
+                        email: user.email,
+                        highestChapterUnlocked: 1,
+                        quizCompleted: 0
+                    });
+                }
+                
                 window.location.href = 'study.html';
+
             } 
             catch (error) {
                 console.error("Google login failed:", error);
@@ -114,12 +129,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayName: username 
                 })
 
+                await setDoc(doc(db, "users", user.uid), {
+                    username: user.displayName, 
+                    email: user.email,
+                    highestChapterUnlocked: 1,
+                    quizCompleted: 0
+                });
+
                 console.log('User registered successfully!', user);
                 alert(`Welcome, ${username}! Your account has been created.`);
 
                 window.location.href = './login.html';
 
-            } catch (error) {
+            } 
+            catch (error) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.error(`Sign up failed: ${errorCode}`, errorMessage);

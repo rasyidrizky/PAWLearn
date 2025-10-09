@@ -1,7 +1,7 @@
-/* Basic Reset & Fonts */
+/* General */
 :root {
     --primary-bg-color: #f7ede2;
-    --card-bg-color: #fff;
+    --card-bg-color: #ffffff;
     --border-color: #000000;
     --text-color: #000000;
     --light-text-color: #929292;
@@ -28,12 +28,13 @@ body {
 
 /* Navbar */
 header {
-    padding: 20px 5%;
     width: 100%;
-    z-index: 100;
-    background-color: #896C6C;
+    padding: 20px 5%;
+    background-color: #896c6c;
     box-shadow: 0 7px black;
+    z-index: 100;
 }
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -46,38 +47,39 @@ nav ul {
     display: flex;
     gap: 40px;
 }
+
 nav ul li a {
     font-size: 25px;
     -webkit-text-stroke: 1px black;
     text-decoration: none;
-    color: #FBF9D1;
+    color: #fbf9d1;
     font-weight: bold;
     padding: 5px 10px;
     transition: color 0.3s;
 }
+
 nav ul li a:hover {
     color: #7b5e48;
 }
 
-/* Fence Backgrounds */
-.fence-strip-topbar {
-    height: 60px;
-    border-top: 3px solid var(--border-color);
-    border-bottom: 3px solid var(--border-color);
-    display: flex;
-    z-index: 50;
-    
-    animation: wiggle-topbar 3s ease-in-out infinite;
-}
+/* Fence Background Animation */
+.fence-strip-topbar,
 .fence-strip-downbar {
     height: 60px;
     border-top: 3px solid var(--border-color);
     border-bottom: 3px solid var(--border-color);
     display: flex;
     z-index: 50;
-    
+}
+
+.fence-strip-topbar {
+    animation: wiggle-topbar 3s ease-in-out infinite;
+}
+
+.fence-strip-downbar {
     animation: wiggle-downbar 3s ease-in-out infinite;
 }
+
 .fence-post {
     width: 60px;
     height: 100%;
@@ -86,48 +88,31 @@ nav ul li a:hover {
 }
 
 .fence .fence-post {
-    background-color: #C1856D;
+    background-color: #c1856d;
 }
 
-@keyframes wiggle-topbar {
-  0%, 100% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(-50px);
-  }
-}
-@keyframes wiggle-downbar {
-  0%, 100% {
-    transform: translateX(-50px);
-  }
-  50% {
-    transform: translateX(0);
-  }
-}
-
-/* Main Profile Content */
+/* Main Profile Section */
 .profile-main {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 30px 20px;
-    z-index: 1;
     position: relative;
+    z-index: 1;
 }
 
 .id-card {
-    background-color: var(--card-bg-color);
-    border-radius: 20px;
-    box-shadow: 8px 8px 0px var(--button-bg-color);
     width: 100%;
     max-width: 800px;
+    background-color: var(--card-bg-color);
+    border: 4px solid var(--button-bg-color);
+    border-radius: 20px;
+    box-shadow: 8px 8px 0px var(--button-bg-color);
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border: 4px solid var(--button-bg-color);
 }
 
 .id-card-header {
@@ -138,17 +123,18 @@ nav ul li a:hover {
     padding-bottom: 20px;
 }
 
-.paw-icon {
-    width: 40px;
-    height: 40px;
-}
-
 .id-card-header h2 {
     font-family: 'Fredoka One', cursive;
     font-size: 2.2em;
     color: var(--text-color);
 }
 
+.paw-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* User Info Section */
 .user-info-section {
     display: flex;
     align-items: center;
@@ -179,31 +165,6 @@ nav ul li a:hover {
     flex-grow: 1;
 }
 
-.last-signed-in {
-    font-size: 0.9em;
-    color: var(--light-text-color);
-    margin-bottom: 5px;
-}
-
-.user-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 180px;
-    flex-shrink: 0;
-}
-
-.user-actions .reset-password-btn,
-.user-actions .logout-button {
-    width: 100%;
-    margin-top: 0;
-}
-
-#last-signed-in-date {
-    font-weight: bold;
-    color: var(--text-color);
-}
-
 #username-fullname {
     font-family: 'Fredoka One', cursive;
     font-size: 1.8em;
@@ -216,7 +177,33 @@ nav ul li a:hover {
     color: var(--light-text-color);
 }
 
-.reset-password-btn {
+.last-signed-in {
+    font-size: 0.9em;
+    color: var(--light-text-color);
+    margin-bottom: 5px;
+}
+
+#last-signed-in-date {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Buttons (Reset Password & Logout) */
+.user-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.user-actions .reset-password-btn,
+.user-actions .logout-button {
+    width: 100%;
+}
+
+.reset-password-btn,
+.logout-button {
     font-family: 'Fredoka One', cursive;
     font-size: 0.95rem;
     padding: 12px 30px;
@@ -224,10 +211,13 @@ nav ul li a:hover {
     cursor: pointer;
     border-radius: 15px;
     border: 3px solid var(--button-bg-color);
-    background-color: #795548;
     color: white;
     box-shadow: 0 4px 0 var(--button-bg-color);
     transition: all 0.2s;
+}
+
+.reset-password-btn {
+    background-color: #795548;
 }
 
 .reset-password-btn:hover {
@@ -236,11 +226,23 @@ nav ul li a:hover {
     box-shadow: 0 2px 0 var(--button-bg-color);
 }
 
-.reset-password-btn:active {
+.logout-button {
+    background-color: #e74c3c;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--button-bg-color);
+}
+
+.reset-password-btn:active,
+.logout-button:active {
     transform: translateY(4px);
     box-shadow: none;
 }
 
+/* Achievements Section */
 .achievements-section {
     display: flex;
     justify-content: space-around;
@@ -255,11 +257,6 @@ nav ul li a:hover {
     gap: 10px;
 }
 
-.achievement-item p {
-    font-size: 1em;
-    color: var(--light-text-color);
-}
-
 .achievement-visual {
     display: flex;
     align-items: center;
@@ -271,6 +268,11 @@ nav ul li a:hover {
     width: 60px;
     height: 60px;
     object-fit: contain;
+}
+
+.achievement-item p {
+    font-size: 1em;
+    color: var(--light-text-color);
 }
 
 .achievement-item span {
@@ -289,13 +291,14 @@ footer {
     text-align: center;
     padding: 15px;
     font-weight: bold;
-    color: #FBF9D1;
-    background-color: #896C6C;
+    color: #fbf9d1;
+    background-color: #896c6c;
     box-shadow: 0 -7px black;
     font-size: 20px;
     -webkit-text-stroke: 1px black;
 }
 
+/* Floating Bone Animation */
 .floating-bone {
     position: fixed;
     width: 80px;
@@ -306,78 +309,25 @@ footer {
     animation-iteration-count: infinite;
 }
 
-.bone-1 {
-    top: 20%;
-    animation-duration: 25s;
-    animation-delay: 0s;
+.bone-1 { top: 20%; animation-duration: 25s; animation-delay: 0s; }
+.bone-2 { top: 50%; animation-duration: 30s; animation-delay: -10s; transform: scale(0.8); }
+.bone-3 { top: 75%; animation-duration: 20s; animation-delay: -5s; transform: scale(1.2); }
+.bone-4 { top: 35%; animation-duration: 30s; animation-delay: -15s; transform: scale(2); }
+.bone-5 { top: 62%; animation-duration: 20s; animation-delay: -20s; transform: scale(0.5); }
+
+/* Keyframes */
+@keyframes wiggle-topbar {
+    0%, 100% { transform: translateX(0px); }
+    50% { transform: translateX(-50px); }
 }
 
-.bone-2 {
-    top: 50%;
-    animation-duration: 30s;
-    animation-delay: -10s;
-    transform: scale(0.8);
-}
-
-.bone-3 {
-    top: 75%;
-    animation-duration: 20s;
-    animation-delay: -5s;
-    transform: scale(1.2);
-}
-
-.bone-4 {
-    top: 35%;
-    animation-duration: 30s;
-    animation-delay: -15s;
-    transform: scale(2);
-}
-
-.bone-5 {
-    top: 62%;
-    animation-duration: 20s;
-    animation-delay: -20s;
-    transform: scale(0.5);
+@keyframes wiggle-downbar {
+    0%, 100% { transform: translateX(-50px); }
+    50% { transform: translateX(0); }
 }
 
 @keyframes floatAndSpin {
-    0% {
-        transform: translateX(-200px) rotate(0deg);
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100vw) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-.logout-button {
-    font-family: 'Fredoka One', cursive;
-    font-size: 0.95rem;
-    padding: 12px 30px;
-    margin-top: 20px;
-    cursor: pointer;
-    border-radius: 15px;
-    border: 3px solid var(--button-bg-color);
-    background-color: #e74c3c;
-    color: white;
-    box-shadow: 0 4px 0 var(--button-bg-color);
-    transition: all 0.2s;
-}
-
-.logout-button:hover {
-    background-color: #c0392b;
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 var(--button-bg-color);
-}
-
-.logout-button:active {
-    transform: translateY(4px);
-    box-shadow: none;
+    0% { transform: translateX(-200px) rotate(0deg); opacity: 0; }
+    20%, 80% { opacity: 1; }
+    100% { transform: translateX(100vw) rotate(360deg); opacity: 0; }
 }

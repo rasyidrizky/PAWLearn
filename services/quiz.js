@@ -1,4 +1,14 @@
 import { questions } from "../constants/questions.js";
+import { auth, db } from "../api/config/firebaseConfig.js";
+import { 
+    doc, 
+    getDoc, 
+    updateDoc, 
+    increment, 
+    collection, 
+    addDoc, 
+    serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -122,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.elements.backBtn.disabled = (this.currentQuestionIndex === 0);
         }
 
-        submit() {
+        async submit() {
             const startTime = localStorage.getItem('quizStartTime');
             const durationInMs = Date.now() - startTime;
             localStorage.setItem('quizDuration', durationInMs);
@@ -156,6 +166,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem('quizScore', score);
             localStorage.setItem('totalQuestions', this.questions.length);
+
+            const user = auth.currentUser;
+            if (user) {
+                const params = new URLSearchParams(window.location.search);
+                const quizId = params.get('id');
+
+                const resultsCollectionRef = collection(db, 'users', user.uid, 'quiz_results');
+
+                await addDoc(resultsCollectionRef, {
+                    quizId: quizId,
+                    score: score,
+                    totalQuestions: this.questions.length,
+                    timeTakenMs: durationInMs,
+                    dateCompleted: serverTimestamp()
+                });
+                console.log("Quiz result saved to subcollection.");
+
+                const docRef = doc(db, "users", user.uid);
+                const updates = { quizCompleted: increment(1) };
+                if (quizId) {
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        const progress = docSnap.data();
+                        if (parseInt(quizId, 10) === progress.highestChapterUnlocked) {
+                            updates.highestChapterUnlocked = increment(1);
+                        }
+                    }
+                }
+                await updateDoc(docRef, updates);
+                console.log("User summary progress updated.");
+            }
+
             window.location.href = 'result.html';
         }
     }

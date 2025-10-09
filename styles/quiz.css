@@ -1,4 +1,4 @@
-/*. General Setup */
+/* Root Variables */
 :root {
     --bg-color: #f3e9d2;
     --panel-color: #c6a49a;
@@ -10,6 +10,7 @@
     --body-font: 'Poppins', sans-serif;
 }
 
+/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -35,51 +36,60 @@ header {
     background-color: #896C6C;
     box-shadow: 0 7px black;
 }
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.2rem;
 }
-.logo { 
-    font-family: var(--logo-font); 
-    font-size: 2rem; 
+
+/* --- Logo --- */
+.logo {
+    font-family: var(--logo-font);
+    font-size: 2rem;
 }
-.paw { 
-    position: relative; 
-    display: inline-block; 
-    color: transparent; 
-    width: 25px; 
-    height: 1.2em; 
-    vertical-align: middle; 
+
+.paw {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    width: 25px;
+    height: 1.2em;
+    vertical-align: middle;
 }
-.paw::before { 
-    content: ''; 
-    position: absolute; 
-    width: 60%; 
-    height: 50%; 
-    background-color: var(--text-color); 
-    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%; 
-    bottom: 15%; 
-    left: 50%; 
-    transform: translateX(-50%); 
-}
-.paw::after { 
-    content: ''; 
+
+.paw::before {
+    content: '';
     position: absolute;
-    width: 24%; 
-    height: 24%; 
-    background-color: var(--text-color); 
-    border-radius: 50%; 
-    top: 15%; 
-    left: 5%; 
-    box-shadow: 140% -5%, 0 0 var(--text-color), 280% 5%, 0 0 var(--text-color); 
+    width: 60%;
+    height: 50%;
+    background-color: var(--text-color);
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
+.paw::after {
+    content: '';
+    position: absolute;
+    width: 24%;
+    height: 24%;
+    background-color: var(--text-color);
+    border-radius: 50%;
+    top: 15%;
+    left: 5%;
+    box-shadow: 140% -5%, 0 0 var(--text-color), 280% 5%, 0 0 var(--text-color);
+}
+
+/* Navigation Links */
 nav ul {
     list-style: none;
     display: flex;
     gap: 40px;
 }
+
 nav ul li a {
     font-size: 25px;
     -webkit-text-stroke: 1px black;
@@ -89,29 +99,29 @@ nav ul li a {
     padding: 5px 10px;
     transition: color 0.3s;
 }
+
 nav ul li a:hover {
     color: #7b5e48;
 }
 
 /* Fence Strip Animations */
-.fence-strip-topbar {
-    height: 60px;
-    border-top: 3px solid var(--outline-color);
-    border-bottom: 3px solid var(--outline-color);
-    display: flex;
-    z-index: 50;
-    
-    animation: wiggle-topbar 3s ease-in-out infinite;
-}
+.fence-strip-topbar,
 .fence-strip-downbar {
     height: 60px;
     border-top: 3px solid var(--outline-color);
     border-bottom: 3px solid var(--outline-color);
     display: flex;
     z-index: 50;
-    
+}
+
+.fence-strip-topbar {
+    animation: wiggle-topbar 3s ease-in-out infinite;
+}
+
+.fence-strip-downbar {
     animation: wiggle-downbar 3s ease-in-out infinite;
 }
+
 .fence-post {
     width: 60px;
     height: 100%;
@@ -131,6 +141,7 @@ nav ul li a:hover {
         transform: translateX(-50px);
     }
 }
+
 @keyframes wiggle-downbar {
     0%, 100% {
         transform: translateX(-50px);
@@ -140,7 +151,7 @@ nav ul li a:hover {
     }
 }
 
-/* Main */
+/* Main Quiz Section */
 .quiz-page-main {
     flex-grow: 1;
     display: flex;
@@ -150,6 +161,7 @@ nav ul li a:hover {
     padding: 40px 20px;
 }
 
+/* Quiz Card */
 .quiz-card {
     background-color: var(--card-bg-color);
     border: 3px solid var(--outline-color);
@@ -165,6 +177,7 @@ nav ul li a:hover {
     flex-direction: column;
 }
 
+/* Card Header */
 .card-header .logo-small {
     font-family: var(--logo-font);
     font-size: 1.5rem;
@@ -172,7 +185,9 @@ nav ul li a:hover {
     margin-bottom: 20px;
 }
 
-.card-header .logo-small .paw { width: 20px; }
+.card-header .logo-small .paw {
+    width: 20px;
+}
 
 .card-header .question-title {
     font-size: 2.5rem;
@@ -187,6 +202,7 @@ nav ul li a:hover {
     margin-bottom: 20px;
 }
 
+/* Card Body & Footer */
 .card-body {
     flex-grow: 1;
 }
@@ -198,13 +214,14 @@ nav ul li a:hover {
     margin-top: 20px;
 }
 
-/* Multiple Choice Options */
+/* Multiple Choice */
 .mc-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-top: 20px;
 }
+
 .mc-option {
     padding: 15px;
     font-size: 1rem;
@@ -213,9 +230,11 @@ nav ul li a:hover {
     cursor: pointer;
     background-color: #f0f0f0;
 }
+
 .mc-option:hover {
     background-color: #ddd;
 }
+
 .mc-option.selected {
     background-color: var(--button-bg-color);
     color: white;
@@ -239,12 +258,15 @@ nav ul li a:hover {
     margin-top: 20px;
     gap: 20px;
 }
-.drag-items, .drop-targets {
+
+.drag-items,
+.drop-targets {
     width: 45%;
     padding: 10px;
     border: 2px dashed #ccc;
     min-height: 150px;
 }
+
 .drag-item {
     background-color: #bce1f2;
     padding: 10px;
@@ -253,6 +275,7 @@ nav ul li a:hover {
     border-radius: 8px;
     cursor: grab;
 }
+
 .drop-target {
     background-color: #f0f0f0;
     padding: 10px;
@@ -262,7 +285,7 @@ nav ul li a:hover {
     min-height: 50px;
 }
 
-/* Navigation Buttons */
+/* Buttons */
 .btn {
     font-family: var(--body-font);
     font-size: 1.1rem;
@@ -306,6 +329,12 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .card-header .question-title { font-size: 2rem; }
-    .quiz-card { padding: 20px; min-height: 70vh; }
+    .card-header .question-title {
+        font-size: 2rem;
+    }
+
+    .quiz-card {
+        padding: 20px;
+        min-height: 70vh;
+    }
 }
