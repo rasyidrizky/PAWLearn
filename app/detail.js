@@ -111,10 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     await updateDoc(docRef, {
                         highestChapterUnlocked: newHighest
                     });
+                    progress.highestChapterUnlocked = newHighest;
                     
                     alert(`Chapter ${chapterIdNum} complete! Chapter ${chapterIdNum + 1} unlocked.`);
                     this.elements.doneButton.textContent = "Completed";
                     this.elements.doneButton.disabled = true;
+
+                    this.setupNavButtons(progress);
                 }
             });
         }
