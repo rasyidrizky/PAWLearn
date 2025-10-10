@@ -203,6 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // INITIALIZATION
+    const params = new URLSearchParams(window.location.search);
+    const start = parseInt(params.get('start'), 10) || 0;
+    const count = parseInt(params.get('count'), 10) || questions.length;
+
+    const questionsQuiz = questions.slice(start, start + count);
+
     const elements = {
         titleEl: document.querySelector("#question-title"),
         textEl: document.querySelector("#question-text"),
@@ -211,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         backBtn: document.querySelector("#back-btn")
     };
 
-    const myQuiz = new Quiz(questions, elements);
+    const myQuiz = new Quiz(questionsQuiz, elements);
     
     myQuiz.init();
 });

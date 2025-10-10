@@ -1,14 +1,14 @@
 export const trophy = [
     { 
-        threshold: 10, 
+        threshold: 15, 
         image: '../assets/elements/trophy-gold.svg' 
     },
     { 
-        threshold: 5,  
+        threshold: 10,  
         image: '../assets/elements/trophy-silver.svg' 
     },
     { 
-        threshold: 1,
+        threshold: 5,
         image: '../assets/elements/trophy-bronze.svg' 
     }
 ]

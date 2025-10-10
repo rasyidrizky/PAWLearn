@@ -39,5 +39,98 @@ export const questions = [
         questionText: "Instructions: When you are directly quoting from a work using APA style, you must include specific information in the in-text citation. Fill in the blank to complete the rule. If you are directly quoting from a work, you will need to include the author, year of publication, and the _______ for the reference.",
         type: "fillInTheBlank",
         answer: "page number"
-    }
+    },
+    {
+        title: "Question 1",
+        questionText: "Read the short passage: Many people think that honey never spoils. In fact, archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old—and still safe to eat. Honey’s long shelf life comes from its low moisture content and acidic pH, which prevent bacteria from growing. Question: What is the main idea of this paragraph?",
+        type: "multipleChoice",
+        options: ["Honey was discovered in Egyptian tombs.", "Honey is a long-lasting food because of its chemical properties.", "Archaeologists study food from ancient times.", "Bacteria cannot survive in any acidic food."],
+        answer: "Honey is a long-lasting food because of its chemical properties."
+    },
+    {
+        title: "Question 2",
+        questionText: "Match each sentence with its meaning based on context.",
+        type: "dragAndDrop",
+        dragItems: [
+            { id: "vague", text: "The student gave a vague answer that confused the teacher." },
+            { id: "generosity", text: "She showed generosity by donating food to the shelter." },
+            { id: "fragile", text: "The old bridge was fragile and could collapse anytime." },
+        ],
+        dropTargets: [
+            { id: "first", text: "unclear or not specific", correctDragId: "vague" },
+            { id: "second", text: "kindness or willingness to give", correctDragId: "generosity" },
+            { id: "third", text: "easily broken or weak", correctDragId: "fragile" }
+        ]
+    },
+    {
+        title: "Question 3",
+        questionText: "Complete the sentence with the correct synonym of the word in parentheses: The manager was very u____ (angry) after hearing the bad news.",
+        type: "fillInTheBlank",
+        answer: "upset"
+    },
+    {
+        title: "Question 4",
+        questionText: "Read the sentence: “I can’t believe we have another surprise meeting,” she sighed, rolling her eyes. Question: What can you infer about the speaker’s tone?",
+        type: "multipleChoice",
+        options: ["She is excited about the meeting.", "She feels annoyed or frustrated.", "She is nervous about the meeting.", "She doesn’t understand what’s happening."],
+        answer: "She feels annoyed or frustrated."
+    },
+    {
+        title: "Question 5",
+        questionText: "Arrange the parts of a short article in the correct order:",
+        type: "dragAndDrop",
+        dragItems: [
+            { id: "support", text: "Supporting Details" },
+            { id: "title", text: "Title" },
+            { id: "conclusion", text: "Conclusion" },
+            { id: "main", text: "Main Idea / Topic Sentence" },
+        ],
+        dropTargets: [
+            { id: "first", text: "1", correctDragId: "title" },
+            { id: "second", text: "2", correctDragId: "support" },
+            { id: "third", text: "3", correctDragId: "main" },
+            { id: "forth", text: "4", correctDragId: "conclusion" }
+        ]
+    },
+    {
+        title: "Question 1",
+        questionText: "Read the short dialogue: A: Hi, could you tell me where the nearest bus stop is? B: Sure! It’s just around the corner next to the bakery. A: Thank you so much! B: No problem. Question: What is the main purpose of this conversation?",
+        type: "multipleChoice",
+        options: ["Asking for directions", "Talking about food", "Making an appointment", "Complaining about transportation"],
+        answer: "Asking for directions"
+    },
+    {
+        title: "Question 2",
+        questionText: "Choose the word with different stress pattern: photograph – photographer – photographic",
+        type: "fillInTheBlank",
+        answer: "photographer"
+    },
+    {
+        title: "Question 3",
+        questionText: "Arrange the parts of a short article in the correct order:",
+        type: "dragAndDrop",
+        dragItems: [
+            { id: "Main idea", text: "Listening for main idea" },
+            { id: "Specific info", text: "Listening for specific information" },
+            { id: "Attitude/Tone", text: "Listening for attitude or tone" },
+        ],
+        dropTargets: [
+            { id: "first", text: "Understanding the general topic of a news report", correctDragId: "Main idea" },
+            { id: "second", text: "Catching a train departure time from an announcement", correctDragId: "Specific info" },
+            { id: "third", text: "Identifying whether a speaker is happy or angry", correctDragId: "Attitude/Tone" },
+        ]
+    },
+    {
+        title: "Question 4",
+        questionText: "Choose the correct sentence:",
+        type: "multipleChoice",
+        options: ["She go to school yesterday.", "She goes to school yesterday.", "She went to school yesterday.", "She going to school yesterday."],
+        answer: "She went to school yesterday."
+    },
+    {
+        title: "Question 5",
+        questionText: "Complete the sentence using an appropriate connector: I stayed at home b______ it was raining heavily.",
+        type: "fillInTheBlank",
+        answer: "because"
+    },
 ];

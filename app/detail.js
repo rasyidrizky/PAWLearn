@@ -36,7 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const chapterData = this.allContents[this.currentIndex];
 
             this.elements.titleElement.textContent = chapterData.title;
-            this.elements.descriptionElement.textContent = chapterData.description;
+            
+            const paragraphs = chapterData.description.split('\n\n');
+            const descriptionHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+            this.elements.descriptionElement.innerHTML = descriptionHTML;
 
             this.elements.videoContainer.innerHTML = '';
 
