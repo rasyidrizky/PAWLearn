@@ -1,5 +1,6 @@
 import { questions } from "../constants/questions.js";
 import { auth, db } from "../service/config/firebaseConfig.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { 
     doc, 
     getDoc, 
@@ -7,7 +8,10 @@ import {
     increment, 
     collection, 
     addDoc, 
-    serverTimestamp 
+    serverTimestamp,
+    query,
+    where,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +30,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         init() {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    this.setupStartScreen(user);
+                }
+            });
+        }
+
+        async setupStartScreen(user) {
+            const params = new URLSearchParams(window.location.search);
+            const quizId = params.get('id');
+
+            const resultsQuery = query(
+                collection(db, 'users', user.uid, 'quiz_results'),
+                where("quizId", "==", quizId)
+            );
+            
+            const querySnapshot = await getDocs(resultsQuery);
+            let highestScore = 0;
+            querySnapshot.forEach((doc) => {
+                const result = doc.data();
+                if (result.score > highestScore) {
+                    highestScore = result.score;
+                }
+            });
+
+            this.elements.startTitle.textContent = `Quiz ${quizId/6}`;
+            this.elements.startQuestionCount.textContent = this.questions.length;
+
+            if (highestScore > 0 || querySnapshot.size > 0) {
+                this.elements.highestScoreDisplay.classList.remove('hidden');
+                this.elements.startHighestScore.textContent = `${highestScore} / ${this.questions.length}`;
+                this.elements.startQuizBtn.textContent = "Try Again";
+            }
+
+            this.elements.startQuizBtn.addEventListener('click', () => {
+                this.startQuiz();
+            });
+        }
+
+        startQuiz() {
+            this.elements.startScreen.classList.add('hidden');
+            this.elements.mainScreen.classList.remove('hidden');
+
+            if (!localStorage.getItem('quizStartTime')) {
+                localStorage.setItem('quizStartTime', Date.now());
+            }
+
             this.setupEventListeners();
             this.renderCurrentQuestion();
         }
@@ -153,7 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             break;
                         }
                         for (const dragItem of question.dragItems) {
-                            const correctTarget = question.dropTargets.find(target => target.correctDragId === dragItem.id);
+                            const correctTarget = question.dropTargets.find(
+                                target => target.correctDragId === dragItem.id
+                            );
                             if (!correctTarget || userAnswer[dragItem.id] !== correctTarget.id) {
                                 allCorrect = false;
                                 break;
@@ -174,32 +227,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const resultsCollectionRef = collection(db, 'users', user.uid, 'quiz_results');
 
-                await addDoc(resultsCollectionRef, {
-                    quizId: quizId,
-                    score: score,
-                    totalQuestions: this.questions.length,
-                    timeTakenMs: durationInMs,
-                    dateCompleted: serverTimestamp()
-                });
-                console.log("Quiz result saved to subcollection.");
+                const existingQuery = query(
+                    resultsCollectionRef,
+                    where("quizId", "==", quizId)
+                );
+                const existingSnapshot = await getDocs(existingQuery);
 
-                const docRef = doc(db, "users", user.uid);
-                const updates = { quizCompleted: increment(1) };
-                if (quizId) {
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        const progress = docSnap.data();
-                        if (parseInt(quizId, 10) === progress.highestChapterUnlocked) {
-                            updates.highestChapterUnlocked = increment(1);
-                        }
+                let isNewQuiz = false;
+
+                if (existingSnapshot.empty) {
+                    await addDoc(resultsCollectionRef, {
+                        quizId: quizId,
+                        score: score,
+                        totalQuestions: this.questions.length,
+                        timeTakenMs: durationInMs,
+                        dateCompleted: serverTimestamp()
+                    });
+                    isNewQuiz = true;
+                    console.log("New quiz result saved.");
+                } 
+                else {
+                    const existingDoc = existingSnapshot.docs[0];
+                    const existingData = existingDoc.data();
+
+                    if (score > existingData.score) {
+                        await updateDoc(existingDoc.ref, {
+                            score: score,
+                            timeTakenMs: durationInMs,
+                            dateCompleted: serverTimestamp()
+                        });
+                        console.log("Existing quiz result updated with higher score.");
+                    } else {
+                        console.log("Existing quiz result kept (score not higher).");
                     }
                 }
-                await updateDoc(docRef, updates);
-                console.log("User summary progress updated.");
+
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const progress = docSnap.data();
+                    const updates = {};
+
+                    if (isNewQuiz) {
+                        updates.quizCompleted = increment(1);
+                    }
+
+                    const quizIdNum = parseInt(quizId, 10);
+                    const unlockMap = {
+                        6: 7,
+                        12: 13,
+                    };
+
+                    if (unlockMap[quizIdNum]) {
+                        const unlockTarget = unlockMap[quizIdNum];
+                        if (progress.highestChapterUnlocked < unlockTarget) {
+                            updates.highestChapterUnlocked = unlockTarget;
+                        }
+                    }
+                    
+                    if (Object.keys(updates).length > 0) {
+                        await updateDoc(docRef, updates);
+                        console.log("User summary progress updated.");
+                    }
+                }
             }
 
             window.location.href = 'result.html';
         }
+
     }
 
     // INITIALIZATION
@@ -210,6 +306,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionsQuiz = questions.slice(start, start + count);
 
     const elements = {
+        startScreen: document.getElementById('quiz-start-screen'),
+        startTitle: document.getElementById('start-title'),
+        startQuestionCount: document.getElementById('start-question-count'),
+        highestScoreDisplay: document.getElementById('highest-score-display'),
+        startHighestScore: document.getElementById('start-highest-score'),
+        startQuizBtn: document.getElementById('start-quiz-btn'),
+        
+        mainScreen: document.getElementById('quiz-main-screen'),
         titleEl: document.querySelector("#question-title"),
         textEl: document.querySelector("#question-text"),
         bodyEl: document.querySelector("#quiz-body"),

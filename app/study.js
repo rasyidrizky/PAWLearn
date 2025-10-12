@@ -42,15 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const chaptersCompleted = this.highestChapterUnlocked - 1;
 
             chaptersToRender.forEach(chapter => {
-                let isLocked = false;
+                const isLocked = chapter.id > this.highestChapterUnlocked;
 
-                if (chapter.isQuiz) {
-                    isLocked = chaptersCompleted < chapter.requiredChapters;
-                } 
-                else {
-                    isLocked = chapter.id > this.highestChapterUnlocked;
-                }
-                
                 const cardLink = document.createElement('a');
                 cardLink.href = isLocked ? "#" : chapter.link;
                 cardLink.classList.add('card-link');

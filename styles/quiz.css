@@ -177,6 +177,25 @@ nav ul li a:hover {
     flex-direction: column;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.start-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    font-size: 1.2rem;
+}
+
+.start-info #start-highest-score {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 /* Card Header */
 .card-header .logo-small {
     font-family: var(--logo-font);
@@ -295,23 +314,27 @@ nav ul li a:hover {
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 0 var(--outline-color);
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 0px var(--outline-color);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--outline-color);
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 .btn-back {
     background-color: var(--card-bg-color);
     color: var(--text-color);
-    box-shadow: 0px 2px 0px var(--outline-color);
 }
 
 .btn-next {
     background-color: var(--button-bg-color);
     color: var(--card-bg-color);
-    box-shadow: 0px 2px 0px var(--outline-color);
 }
 
 /* Footer */

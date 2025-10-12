@@ -38,16 +38,29 @@
     </div>
 
     <main class="quiz-page-main">
-        <div class="quiz-card">
+        <div id="quiz-start-screen" class="quiz-card">
             <div class="card-header">
-                <img src="../assets/elements/Logo ALL.png" alt="PAWLearn Logo" width=15%>
-                <h1 class="question-title" id="question-title"></h1>
-                <p class="question-text" id="question-text">
+                <img src="../assets/elements/Logo 2.png" alt="PAWLearn Logo" width="15%">
+                <h1 id="start-title">Loading Quiz...</h1>
+            </div>
+            <div class="card-body start-info">
+                <p>Number of Questions: <span id="start-question-count">...</span></p>
+                
+                <p id="highest-score-display" class="hidden">
+                    Your Highest Score: <span id="start-highest-score">...</span>
                 </p>
             </div>
+            <div class="card-footer">
+                <button class="btn btn-next" id="start-quiz-btn">Start Quiz</button>
+            </div>
+        </div>
 
+        <div id="quiz-main-screen" class="quiz-card hidden">
+            <div class="card-header">
+                <h1 class="question-title" id="question-title">Question Number</h1>
+                <p class="question-text" id="question-text">Question text will be loaded here...</p>
+            </div>
             <div class="card-body" id="quiz-body"></div>
-
             <div class="card-footer">
                 <button class="btn btn-back" id="back-btn">&lt; Back</button>
                 <button class="btn btn-next" id="next-btn">Next &gt;</button>

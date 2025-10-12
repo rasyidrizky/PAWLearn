@@ -1,5 +1,6 @@
-import { auth } from "./config/firebaseConfig.js";
+import { auth, db } from "./config/firebaseConfig.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 class Auth {
     constructor(protectedPaths, authPaths) {
@@ -10,10 +11,22 @@ class Auth {
     }
 
     init() {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             const isLoggedIn = !!user;
 
             if (isLoggedIn) {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) {    
+                    console.log("First time login for this user, creating document...");
+                    await setDoc(docRef, {
+                        username: user.displayName || user.email.split('@')[0],
+                        email: user.email,
+                        highestChapterUnlocked: 1,
+                        quizCompleted: 0
+                    });
+                }
+
                 this.startSessionTimer();
                 this.setupEventListeners(user.uid);
             }

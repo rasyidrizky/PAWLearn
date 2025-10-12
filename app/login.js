@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 console.log("Successfully logged in!", userCredential.user);
 
-                window.location.href = 'study.html'; 
+                //window.location.href = 'study.html'; 
             } 
             catch (error) {
                 const errorCode = error.code;
@@ -78,24 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         async loginGoogle() {
             try {
                 const provider = new GoogleAuthProvider();
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-
-                if (!docSnap.exists()) {
-                    console.log("First time Google sign-in for this user. Creating progress document...");
-                    await setDoc(docRef, {
-                        username: user.displayName, 
-                        email: user.email,
-                        highestChapterUnlocked: 1,
-                        quizCompleted: 0
-                    });
-                }
-                
-                window.location.href = 'study.html';
-
+                await signInWithPopup(auth, provider);
             } 
             catch (error) {
                 console.error("Google login failed:", error);

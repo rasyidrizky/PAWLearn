@@ -97,28 +97,45 @@ document.addEventListener('DOMContentLoaded', () => {
             let progress = docSnap.data();
             const chapterIdNum = parseInt(this.chapterId, 10);
 
+            this.elements.doneButton.textContent = "Mark as Done";
+            this.elements.doneButton.disabled = false;
+
             if (chapterIdNum < progress.highestChapterUnlocked) {
                 this.elements.doneButton.textContent = "Completed";
                 this.elements.doneButton.disabled = true;
             }
-
+            
             this.elements.doneButton.addEventListener('click', async () => {
                 docSnap = await getDoc(docRef);
                 progress = docSnap.data();
                 
                 if (chapterIdNum === progress.highestChapterUnlocked) {
-                    const newHighest = progress.highestChapterUnlocked + 1;
-                    await updateDoc(docRef, {
-                        highestChapterUnlocked: newHighest
-                    });
+                    const preQuizChapters = [5, 11, 17];
+
+                    let newHighest;
+
+                    if (preQuizChapters.includes(chapterIdNum)) {
+                        newHighest = chapterIdNum + 1;
+                        console.log(`Chapter ${chapterIdNum} completed → Unlock quiz ${newHighest/6}`);
+                    } 
+                    else {
+                        newHighest = progress.highestChapterUnlocked + 1;
+                    }
+
+                    await updateDoc(docRef, { highestChapterUnlocked: newHighest });
                     progress.highestChapterUnlocked = newHighest;
                     
-                    alert(`Chapter ${chapterIdNum} complete! Chapter ${chapterIdNum + 1} unlocked.`);
+                    alert(`Chapter ${chapterIdNum} complete! New stage unlocked.`);
                     this.elements.doneButton.textContent = "Completed";
                     this.elements.doneButton.disabled = true;
 
                     this.setupNavButtons(progress);
                 }
+
+                console.log("DEBUG setupDoneButton");
+                console.log("chapterId:", this.chapterId);
+                console.log("chapterIdNum:", chapterIdNum);
+                console.log("highestChapterUnlocked:", progress.highestChapterUnlocked);
             });
         }
     }
